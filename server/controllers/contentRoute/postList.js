@@ -1,13 +1,13 @@
 const { pool } = require('../../database/pool')
 const joi=require('joi')
 
-const ListSchema=joi.object({
+const listSchema=joi.object({
     name:joi.string().min(3).max(50)
 })
 
 
 function postList(req,res){
-    const {error,value}=ListSchema.validate(req.body)
+    const {error,value}=listSchema.validate(req.body)
     if(error){
         res.status(400).send(error.details[0].message)
         return
