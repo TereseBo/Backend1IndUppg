@@ -1,5 +1,4 @@
 const joi = require('joi')
-const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
 const { pool } = require('../../database/pool')
@@ -7,7 +6,6 @@ const registerSchema = joi.object({
     namn: joi.string().min(3).max(50).required(),
     password: joi.string().min(3).max(50).required()
 })
-
 
 function register(req, res) {
     const { error, value } = registerSchema.validate(req.body)
@@ -33,10 +31,9 @@ function register(req, res) {
                 res.status(500).send(err);
                 return;
             }
-            res.status(200).send('You have been registered, please log in');
+            res.status(201).send('You have been registered, please log in');
         })
     })
-
 }
 
 module.exports.register = register

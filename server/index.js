@@ -1,7 +1,6 @@
 const express=require('express');
 const server=express();
 const dotenv=require('dotenv').config();
-
 //pool
 const {pool}=require('./database/pool');
 

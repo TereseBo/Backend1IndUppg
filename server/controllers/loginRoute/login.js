@@ -8,10 +8,8 @@ const loginSchema = joi.object({
     password: joi.string().min(3).max(50).required()
 })
 
-
 function logIn(req, res) {
     const { error, value } = loginSchema.validate(req.body)
-
     if (error) {
         res.status(400).send(error.details[0].message)
         return
@@ -19,18 +17,13 @@ function logIn(req, res) {
 
     const { namn, password } = value
 
-
-
     pool.execute('SELECT * FROM users WHERE namn = ?', [namn], (err, results) => {
         if (err) {
             res.status(500).send(err);
             return;
         }
         if (results[0] && bcrypt.compareSync(password, results[0].password)) {
-            console.log(results[0].password)
-            console.log(bcrypt.compareSync(password, results[0].password))
-
-            const authToken = jwt.sign({id:results[0].id, name:results[0].name}, process.env.SECRET_KEY, { expiresIn: 12000 });
+            const authToken = jwt.sign({id:results[0].id, name:results[0].namn}, process.env.SECRET_KEY, { expiresIn: 12000 });
 
             res.cookie('authToken', authToken, {
                 httpOnly: true,
@@ -43,7 +36,6 @@ function logIn(req, res) {
         }
         res.status(401).send('Wrong username or password')
     })
-        
 }
 
 module.exports.logIn = logIn
