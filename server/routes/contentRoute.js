@@ -10,17 +10,18 @@ const {checkListAccess} = require('../middlewares/checkListAccess.js')
 // Controllers
 const {getLists} = require('../controllers/contentRoute/getLists')
 const {getItems} = require('../controllers/contentRoute/getItems')
+const {deleteList} = require('../controllers/contentRoute/deleteList')
+const {postList} = require('../controllers/contentRoute/postList')
 
 
 contentRoute.use(cookieparser())
 
-contentRoute.get('/', checkCookie, getLists)
+contentRoute.get('/index', checkCookie, getLists)
 
-contentRoute.get('/:listId', checkCookie, getItems)
+contentRoute.get('/list', checkCookie, checkListAccess, getItems)
+contentRoute.delete('/list', checkCookie, checkListAccess, deleteList)
 
-contentRoute.post('/', checkCookie,(req, res) => {
-    res.send('Hello from content route')
-})
+contentRoute.post('/list', checkCookie, postList)
 
 contentRoute.delete('/', checkCookie,(req, res) => {
     res.send('Hello from content route')
