@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 const { pool } = require('../../database/pool')
 const registerSchema = joi.object({
     namn: joi.string().min(3).max(50).required(),
-    password: joi.string().min(3).max(50).required()
+    password: joi.string().min(3).max(50).required(),
 })
 
 function register(req, res) {
@@ -26,7 +26,7 @@ function register(req, res) {
             res.status(403).send('User already exists')
             return
         }
-        pool.execute('INSERT INTO users (namn, password) VALUES (?, ?)', [namn, bcrypt.hashSync(password, 10)], (err, results) => {
+        pool.execute('INSERT INTO users (namn, password, friends) VALUES (?, ?,?)', [namn, bcrypt.hashSync(password, 10),"[]"], (err, results) => {
             if (err) {
                 res.status(500).send(err);
                 return;

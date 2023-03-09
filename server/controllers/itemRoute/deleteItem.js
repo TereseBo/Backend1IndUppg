@@ -2,7 +2,7 @@ const { pool } = require('../../database/pool')
 const joi = require('joi')
 
 const itemSchema = joi.object({
-    id: joi.number().required().min(0),
+    id: joi.number().required().min(1),
 })
 
 function deleteItem(req, res) {

@@ -2,10 +2,22 @@ const express= require('express')
 const friendRoute = express.Router()
 const cookieparser = require('cookie-parser')
 
-friendRoute.use(cookieparser())
+// Middlewares
+const {checkCookie} = require('../middlewares/checkCookie')
+const {addUserFriends} = require('../middlewares/addUserFriends')
 
-friendRoute.get('/', (req, res) => {
-    res.send('Hello from friend route')
-})
+// Controllers
+const { getFriends } = require('../controllers/friendRoute/getFriends')
+const { postFriend } = require('../controllers/friendRoute/postFriend')
+
+
+
+friendRoute.use(cookieparser())
+friendRoute.use(checkCookie)
+friendRoute.use(addUserFriends)
+
+friendRoute.get('/index', getFriends)
+friendRoute.post('/', postFriend)
+
 
 module.exports = friendRoute

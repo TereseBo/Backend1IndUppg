@@ -2,7 +2,7 @@ const { pool } = require('../../database/pool')
 const joi = require('joi')
 
 const itemSchema = joi.object({
-    id: joi.number().integer().required().min(0),
+    id: joi.number().integer().required().min(1),
     klar: joi.number().integer().required().min(0).max(1)
 })
 

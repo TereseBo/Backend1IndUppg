@@ -4,7 +4,7 @@ const joi = require('joi')
 const itemSchema = joi.object({
     name: joi.string().min(3).max(50),
     description: joi.string().min(3).max(255),
-    list: joi.number().required().min(0)
+    list: joi.number().required().min(1)
 
 })
 
