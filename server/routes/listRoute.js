@@ -6,9 +6,9 @@ const {addUserLists} = require('../middlewares/addUserLists.js')
 const {checkListAccess} = require('../middlewares/checkListAccess.js')
 
 // Controllers
-const { postList } = require('../controllers/contentRoute/listRoute/postList')
-const {deleteList} = require('../controllers/contentRoute/listRoute/deleteList')
-const {getItems} = require('../controllers/contentRoute/listRoute/getItems')
+const { postList } = require('../controllers/listRoute/postList')
+const {deleteList} = require('../controllers/listRoute/deleteList')
+const {getItems} = require('../controllers/listRoute/getItems')
 
 listRoute.get('/', addUserLists, checkListAccess, getItems)
 listRoute.delete('/', addUserLists, checkListAccess, deleteList)

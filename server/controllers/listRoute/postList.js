@@ -1,10 +1,9 @@
-const { pool } = require('../../../database/pool')
+const { pool } = require('../../database/pool')
 const joi=require('joi')
 
 const listSchema=joi.object({
     name:joi.string().min(3).max(50)
 })
-
 
 function postList(req,res){
     const {error,value}=listSchema.validate(req.body)
@@ -22,6 +21,4 @@ function postList(req,res){
     res.status(201).send('List created')
      })
 }
-
-
 module.exports.postList = postList

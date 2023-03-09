@@ -5,9 +5,9 @@ const itemRoute = express.Router()
 const {addUserLists} = require('../middlewares/addUserLists.js')
 
 // Controllers
-const { postItem } = require('../controllers/contentRoute/itemRoute/postItem')
-const {deleteItem} = require('../controllers/contentRoute/itemRoute/deleteItem')
-const {patchItem} = require('../controllers/contentRoute/itemRoute/patchItem')
+const { postItem } = require('../controllers/itemRoute/postItem')
+const {deleteItem} = require('../controllers/itemRoute/deleteItem')
+const {patchItem} = require('../controllers/itemRoute/patchItem')
 
 itemRoute.use(addUserLists)
 

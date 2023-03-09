@@ -1,11 +1,10 @@
-const { pool } = require('../../../database/pool')
+const { pool } = require('../../database/pool')
 const joi = require('joi')
 
 const itemSchema = joi.object({
     id: joi.number().required().min(0),
 })
 
-//not finished
 function deleteItem(req, res) {
     const { error, value } = itemSchema.validate(req.body)
     if (error) {
@@ -32,7 +31,7 @@ function deleteItem(req, res) {
             if (err) {
                 res.status(500).send(err)
             }
-            res.status(201).send('Item deleted')
+            res.status(200).send('Item deleted')
         })
     })
     }
