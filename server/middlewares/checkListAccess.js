@@ -7,6 +7,8 @@ const listIdSchema = joi.object({
 
 function checkListAccess(req, res, next) {
 
+    console.log(req.user.lists)
+
     const { error, value } = listIdSchema.validate(req.query)
 
     if (error) {
@@ -14,24 +16,10 @@ function checkListAccess(req, res, next) {
         return
     }
     const { id } = value
-    pool.execute('SELECT * FROM lists WHERE user_id= ?', [req.user.id], (err, results) => {
-        if (err) {
-            res.status(500).send(err);
-            return;
-        }
-        if (results.length === 0) {
-            res.status(204).send('You have no lists')
-        }
-        const listIds = results.map(list => list.id)
-        if (!listIds.includes(id)) {
-            res.status(401).send('You are not authorized to access this list')
-            return
-        }
-        next()
-     } )
+    if (!req.user.lists.includes(id)) {
+        res.status(401).send('You are not authorized to access this list')
+        return
+    }
+    next()
 }
-
-
-
-
 module.exports.checkListAccess = checkListAccess

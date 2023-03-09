@@ -1,4 +1,4 @@
-const { pool } = require('../../database/pool')
+const { pool } = require('../../../database/pool')
 
 function getItems(req, res) {
     console.log(req.query.id)

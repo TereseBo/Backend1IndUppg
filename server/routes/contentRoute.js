@@ -5,25 +5,25 @@ const cookieparser = require('cookie-parser')
 
 // Middlewares
 const {checkCookie} = require('../middlewares/checkCookie')
-const {checkListAccess} = require('../middlewares/checkListAccess.js')
 
 // Controllers
 const {getLists} = require('../controllers/contentRoute/getLists')
-const {getItems} = require('../controllers/contentRoute/getItems')
-const {deleteList} = require('../controllers/contentRoute/deleteList')
-const {postList} = require('../controllers/contentRoute/postList')
-const { postItem } = require('../controllers/contentRoute/postItem')
 
+//Routes
+const itemRoute = require('./itemRoute')
+const listRoute = require('./listRoute')
 
 contentRoute.use(cookieparser())
+contentRoute.use(checkCookie)
 
-contentRoute.get('/index', checkCookie, getLists)
+contentRoute.use('/item',itemRoute)
+contentRoute.use('/list',listRoute)
 
-contentRoute.get('/list', checkCookie, checkListAccess, getItems)
-contentRoute.delete('/list', checkCookie, checkListAccess, deleteList)
-contentRoute.post('/list', checkCookie, postList)
+contentRoute.get('/', getLists)
 
-contentRoute.post('/item', checkCookie, postItem)
+
+
+
 
 
 

@@ -1,4 +1,4 @@
-const { pool } = require('../../database/pool')
+const { pool } = require('../../../database/pool')
 const joi=require('joi')
 
 const listSchema=joi.object({
