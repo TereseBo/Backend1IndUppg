@@ -1,7 +1,6 @@
 const { pool } = require('../../database/pool')
 
 function getItems(req, res) {
-    console.log(req.query.id)
     pool.execute('SELECT * FROM items where list_id=?',[req.query.id], (err, results) => {
         if(err){
             res.status(500).send(err)

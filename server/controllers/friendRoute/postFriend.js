@@ -1,5 +1,5 @@
 const { pool } = require('../../database/pool')
-const joi=require('joi')
+const joi = require('joi')
 
 const friendSchema = joi.object({
     id: joi.number().integer().min(1).required()
@@ -13,16 +13,28 @@ function postFriend(req, res) {
     }
     const { id } = value
     req.user.friends.push(id)
-    let unicityControle= new Set(req.user.friends)
-    req.user.friends=[...unicityControle]
-    console.log(req.user.friends)
+    let unicityControle = new Set(req.user.friends)
+    req.user.friends = [...unicityControle]
 
-    pool.execute('UPDATE users SET friends=? WHERE id=?', [JSON.stringify(req.user.friends), req.user.id], (err, results) => {
+    pool.execute('SELECT id FROM users ', (err, results) => {
         if (err) {
             res.status(500).send(err)
             return
         }
-        res.status(201).send('Friend added')
+        let users = results.map((user) => user.id)
+        if (!users.includes(id)) {
+            res.status(400).send('No such user found')
+            return
+        }
+
+        pool.execute('UPDATE users SET friends=? WHERE id=?', [JSON.stringify(req.user.friends), req.user.id], (err, result) => {
+            if (err) {
+                res.status(500).send(err)
+                return
+            }
+            res.status(201).send('Friend added')
+        })
+
     })
 
 }

@@ -19,6 +19,7 @@ server.use('/login',loginRoute);
 
 
 
+
 server.get('/',(req,res)=>{
     pool.execute('SELECT * FROM users ', (err, results) => {
         if (err) {

@@ -20,7 +20,7 @@ function postItem(req, res) {
         res.status(401).send('You are not authorized to edit this list')
         return
     }
-    pool.execute('INSERT INTO items (namn, beskrivning, list_id) VALUES (?,?,?)', [name, description, list], (err, results) => {
+    pool.execute('INSERT INTO items (name, description, list_id) VALUES (?,?,?)', [name, description, list], (err, results) => {
         if (err) {
             res.status(500).send(err)
         }

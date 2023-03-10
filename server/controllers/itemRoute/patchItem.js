@@ -3,7 +3,7 @@ const joi = require('joi')
 
 const itemSchema = joi.object({
     id: joi.number().integer().required().min(1),
-    klar: joi.number().integer().required().min(0).max(1)
+    completed: joi.number().integer().required().min(0).max(1)
 })
 
 function patchItem(req, res) {
@@ -28,7 +28,7 @@ function patchItem(req, res) {
             return
         }
         if (klar === 1) {
-            pool.execute('UPDATE items SET klar=Now() WHERE id=?', [id], (err, results) => {
+            pool.execute('UPDATE items SET completed=Now() WHERE id=?', [id], (err, results) => {
                 if (err) {
                     res.status(500).send(err)
                 }
@@ -36,7 +36,7 @@ function patchItem(req, res) {
                 return
             })
         }
-        pool.execute('UPDATE items SET klar=NULL WHERE id=?', [id], (err, results) => {
+        pool.execute('UPDATE items SET completed=NULL WHERE id=?', [id], (err, results) => {
             if (err) {
                 res.status(500).send(err)
             }

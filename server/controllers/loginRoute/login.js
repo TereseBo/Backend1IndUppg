@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 
 const { pool } = require('../../database/pool')
 const loginSchema = joi.object({
-    namn: joi.string().min(3).max(50).required(),
+    name: joi.string().min(3).max(50).required(),
     password: joi.string().min(3).max(50).required()
 })
 
@@ -15,15 +15,15 @@ function logIn(req, res) {
         return
     }
 
-    const { namn, password } = value
+    const { name, password } = value
 
-    pool.execute('SELECT * FROM users WHERE namn = ?', [namn], (err, results) => {
+    pool.execute('SELECT * FROM users WHERE name = ?', [name], (err, results) => {
         if (err) {
             res.status(500).send(err);
             return;
         }
         if (results[0] && bcrypt.compareSync(password, results[0].password)) {
-            const authToken = jwt.sign({id:results[0].id, name:results[0].namn}, process.env.SECRET_KEY, { expiresIn: 12000 });
+            const authToken = jwt.sign({id:results[0].id, name:results[0].name}, process.env.SECRET_KEY, { expiresIn: 12000 });
 
             res.cookie('authToken', authToken, {
                 httpOnly: true,

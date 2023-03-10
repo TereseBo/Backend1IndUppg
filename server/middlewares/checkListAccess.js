@@ -2,7 +2,7 @@ const { pool } = require('../database/pool')
 const joi = require('joi')
 
 const listIdSchema = joi.object({
-    id: joi.number().required().min(0)
+    id: joi.number().required().min(1)
 })
 
 function checkListAccess(req, res, next) {
