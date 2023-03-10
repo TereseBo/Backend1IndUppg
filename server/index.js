@@ -1,6 +1,7 @@
 const express=require('express');
 const server=express();
 const dotenv=require('dotenv').config();
+const cors=require('cors');
 //pool
 const {pool}=require('./database/pool');
 
@@ -10,8 +11,8 @@ const friendRoute=require('./routes/friendRoute');
 const contentRoute=require('./routes/contentRoute');
 const loginRoute=require('./routes/loginRoute');
 
+server.use(cors());
 server.use(express.json());
-//server.use(express.urlencoded({extended:true}));
 server.use('/register',registerRoute);
 server.use('/friends',friendRoute);
 server.use('/content',contentRoute);
