@@ -23,7 +23,7 @@ function deleteItem(req, res) {
         }
         const list = results[0].list_id
         if (!req.user.lists.includes(list)) {
-            res.status(401).send('You are not authorized to edit this list')
+            res.status(403).send('You are not authorized to edit this list')
             return
         }
 

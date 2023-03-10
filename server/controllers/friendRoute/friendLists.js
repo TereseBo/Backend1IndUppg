@@ -15,7 +15,7 @@ function friendLists(req,res){
     }
     const {id} = value
     if(!req.user.friends.includes(id)){
-        res.status(401).send('You are not authorized to view this list')
+        res.status(403).send('You are not authorized to view this list')
         return
     }
     pool.execute('SELECT * FROM lists WHERE user_id=?', [id], (err, results) => {

@@ -23,7 +23,7 @@ function friendListItems(req,res){
         }
         const user = results[0].user_id
         if(!req.user.friends.includes(user)){
-            res.status(401).send('You are not authorized to view this list')
+            res.status(403).send('You are not authorized to view this list')
             return
         }
         pool.execute('SELECT * FROM items WHERE list_id=?', [id], (err, results) => {

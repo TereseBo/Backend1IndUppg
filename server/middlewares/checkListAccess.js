@@ -17,7 +17,7 @@ function checkListAccess(req, res, next) {
     }
     const { id } = value
     if (!req.user.lists.includes(id)) {
-        res.status(401).send('You are not authorized to access this list')
+        res.status(403).send('You are not authorized to access this list')
         return
     }
     next()

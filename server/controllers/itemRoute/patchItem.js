@@ -24,7 +24,7 @@ function patchItem(req, res) {
         }
         const list = results[0].list_id
         if (!req.user.lists.includes(list)) {
-            res.status(401).send('You are not authorized to edit this item')
+            res.status(403).send('You are not authorized to edit this item')
             return
         }
         if (klar === 1) {

@@ -17,7 +17,7 @@ function postItem(req, res) {
     const { name, description, list } = value
 
     if(!req.user.lists.includes(list)){
-        res.status(401).send('You are not authorized to edit this list')
+        res.status(403).send('You are not authorized to edit this list')
         return
     }
     pool.execute('INSERT INTO items (name, description, list_id) VALUES (?,?,?)', [name, description, list], (err, results) => {
