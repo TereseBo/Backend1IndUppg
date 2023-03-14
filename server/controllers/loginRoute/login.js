@@ -28,7 +28,7 @@ function logIn(req, res) {
             res.cookie('authToken', authToken, {
                 httpOnly: true,
                 sameSite: 'none',
-                //secure: true,
+                secure: true,
                 maxAge: 360000
             });
             res.status(200).send('Welcome, have a cookie')

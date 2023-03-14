@@ -20,7 +20,7 @@ contentRoute.use(checkCookie)
 contentRoute.use('/item',itemRoute)
 contentRoute.use('/list',listRoute)
 
-contentRoute.get('/', getLists)
+contentRoute.get('/lists', getLists)
 contentRoute.get('/users', getUsers)
 
 

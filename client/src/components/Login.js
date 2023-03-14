@@ -15,7 +15,8 @@ export default function Login({ status, setStatus, msg, setMsg }) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(credentials)
+            body: JSON.stringify(credentials),
+            credentials: 'include'
         })
         if (res.status === 200) {
             setStatus(true)
@@ -38,6 +39,7 @@ console.log(msg)
 
         <div className='Login'>
             {status!==true?(
+                <div>
                 <form onChange={saveChange} onSubmit={sendLogin}>
                     <h1>Login</h1>
                     <label htmlFor="name">Username</label>
@@ -46,6 +48,8 @@ console.log(msg)
                     <input type="current-password" name="password" id="password" />
                     <input type="submit" value="Login" />
                 </form>
+                <p>{msg}</p>
+                </div>
             ):(
                 <p>{msg}</p>
             )

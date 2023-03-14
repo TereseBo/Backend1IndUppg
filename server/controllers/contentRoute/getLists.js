@@ -6,7 +6,7 @@ function getLists(req, res) {
             res.status(500).send(err)
         }
         if(results.length===0){
-            res.status(204).send('No lists found')
+            res.status(204)
             return
         }
         res.status(200).send(results)

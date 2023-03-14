@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 
 function checkCookie(req, res, next) {
-    console.log(req.cookies.authToken)
+    console.log('check cookie ran')
     try {
         const token = req.cookies.authToken;
         const decoded = jwt.verify(token, process.env.SECRET_KEY);
@@ -11,6 +11,7 @@ function checkCookie(req, res, next) {
         };
         next();
     } catch (err) {
+        console.log(err)
         res.status(401).send('You are not authorized to view this page, please login');
         return
     }

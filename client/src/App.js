@@ -5,9 +5,10 @@ import './App.css';
 //Pages
 import Home from './components/Home';
 import Index from './pages/Index';
-import List from './pages/List';
+import Listlist from './pages/Listlist';
 import Menu from './components/Menu';
-import Userlist from './components/Userlist';
+import Userlist from './pages/Userlist';
+import Friendlist from './pages/Friendlist';
 
 function App() {
   const [msg, setMsg] = useState('')
@@ -15,12 +16,17 @@ function App() {
 
   useEffect(() => {
     async function checkLogin() {
-      let res = await fetch('http://localhost:5050/login')
+      console.log('checkLogin')
+      let res = await fetch('http://localhost:5050/login', { credentials: 'include' })
       let data = await res.text()
       if (res.status === 200) {
         setStatus(true)
         setMsg(data)
+      }else{
+        setStatus(false)
+        setMsg(data)
       }
+
     }
     checkLogin()
   }, [])
@@ -32,12 +38,12 @@ function App() {
 <Link to='/'>Home menu</Link>
     </header>
     <Routes>
-<Route path="/" element={<Menu/>} />
-      <Route path="/friends" element={<Index/>} />
+<Route path="/" element={<Menu status={status} msg={msg} setMsg={setMsg}/>} />
+      <Route path="/friends" element={<Friendlist status={status} setStatus={setStatus} setMsg={setMsg}/>} />
       <Route path="/friends/new" element={<Userlist status={status} setStatus={setStatus} setMsg={setMsg}/>} />
-      <Route path="/lists" element={<Index/>} />
-      <Route path="/lists/new" element={<List/>} />
-      <Route path="/lists/:id" element={<List/>} />
+      <Route path="/lists" element={<Listlist status={status} setStatus={setStatus} setMsg={setMsg}/>} />
+      <Route path="/lists/new" element={<Index/>} />
+      <Route path="/lists/:id" element={<Index/>} />
       <Route path="/friends/:id" element={<Index/>} />
       <Route path="/friends/lists:id" element={<Index/>} />
     </Routes>
