@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import User from '../components/User'
 import Addbutton from '../components/Addbutton'
 import Itemcontainer from '../components/Itemcontainer'
+import NewItem from '../components/NewItem'
 
 export default function Listlist({ setMsg, setStatus, status }) {
     const [list, setList] = useState([])
@@ -19,14 +20,15 @@ export default function Listlist({ setMsg, setStatus, status }) {
                     setMsg('Lists loaded')
                     break;
                 case 204:
-                    setPgMsg("Nothing found")
+                    setPgMsg("No Lists found")
                     break;
                 case 401:
                     setMsg(data)
                     setStatus(false)
                     break;
+                
                 default:
-                    setMsg(data)
+                    setPgMsg(data)
             }
         }
 
@@ -36,7 +38,7 @@ export default function Listlist({ setMsg, setStatus, status }) {
     async function addItems(e) {
         console.log('addItems')
         console.log(e.target.id)
-       //let currentid=e.target.id
+        //let currentid=e.target.id
         let res2 = await fetch(`http://localhost:5050/content/list/?id=${e.target.id}`, { credentials: 'include' })
         const data = await res2.text()
         console.log(data)
@@ -50,14 +52,15 @@ export default function Listlist({ setMsg, setStatus, status }) {
                 console.log(listCopy)
                 console.log(e.target.id)
                 console.log(listCopy.find((list) => list.id == e.target.id))
-                listCopy.find((list) => list.id == e.target.id).items=JSON.parse(data)
+                listCopy.find((list) => list.id == e.target.id).items = JSON.parse(data)
                 console.log(listCopy)
                 setList(listCopy)
                 console.log(list)
                 setMsg(`Items loaded for list ${listCopy.find((list) => list.id == e.target.id).name}`)
                 break;
             case 204:
-                
+setMsg(`No items to return for ${listCopy.find((list) => list.id == e.target.id).name}`)
+
                 break;
             case 401:
                 setMsg(data)
@@ -68,20 +71,26 @@ export default function Listlist({ setMsg, setStatus, status }) {
         }
     }
 
+
     return (
 
         <div>
-            {list===undefined?<p>{pgMsg}</p>:
-            <ul>
-                {list.map((listEntry) => (
-                    <li key={"list-" + listEntry.id}>
-                        <User key={"listname-" + listEntry.id} id={listEntry.id} name={listEntry.name} />
-                        <Addbutton id={listEntry.id} key={'button-'+listEntry.id} callback={addItems} text="Display items"/>
-                        {listEntry.items!==undefined?<Itemcontainer items={listEntry.items} setMsg={setMsg} setStatus={setStatus} setList={setList} list={list} parentlist={listEntry.id}/>:null}
+            {list === undefined ? <p>{pgMsg}</p> :
+                <ul>
+                    {list.map((listEntry) => (
+                        <li key={"list-" + listEntry.id}>
+                            <User key={"listname-" + listEntry.id} id={listEntry.id} name={listEntry.name} />
+                            <Addbutton id={listEntry.id} key={'button-' + listEntry.id} callback={addItems} text="Display items" />
+                            
+                            {listEntry.items !== undefined ? <Itemcontainer items={listEntry.items} setMsg={setMsg} setStatus={setStatus} setList={setList} list={list} parentlist={listEntry.id} /> :
+                                <NewItem setMsg={setMsg} setStatus={setMsg} setList={setList} list={list} parentlist={listEntry.id} />
+
+                            }
+
                         </li>
-                ))}
-            </ul>
-}
+                    ))}
+                </ul>
+            }
         </div>
     )
 }
