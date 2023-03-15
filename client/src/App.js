@@ -9,6 +9,7 @@ import Listlist from './pages/Listlist';
 import Menu from './components/Menu';
 import Userlist from './pages/Userlist';
 import Friendlist from './pages/Friendlist';
+import FriendsLists from './pages/FriendsLists';
 
 function App() {
   const [msg, setMsg] = useState('')
@@ -44,8 +45,7 @@ function App() {
       <Route path="/lists" element={<Listlist status={status} setStatus={setStatus} setMsg={setMsg}/>} />
       <Route path="/lists/new" element={<Index/>} />
       <Route path="/lists/:id" element={<Index/>} />
-      <Route path="/friends/:id" element={<Index/>} />
-      <Route path="/friends/lists:id" element={<Index/>} />
+      <Route path="/friends/lists/:id" element={<FriendsLists status={status} setStatus={setStatus} setMsg={setMsg}/>} />
     </Routes>
     </BrowserRouter>
   );

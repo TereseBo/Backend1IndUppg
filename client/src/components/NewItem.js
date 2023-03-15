@@ -6,7 +6,6 @@ export default function NewItem({ setMsg, setStatus, status, setList, list, pare
 
     async function handleSubmit(e) {
         e.preventDefault()
-        console.log('handleSubmit')
         let res = await fetch(`http://localhost:5050/content/item`, {
             method: 'POST',
             headers: {
@@ -20,19 +19,15 @@ export default function NewItem({ setMsg, setStatus, status, setList, list, pare
         switch (res.status) {
             case 201:
                 let res2 = await fetch(`http://localhost:5050/content/list/?id=${parentlist}`, { credentials: 'include' })
-                const data = await res2.text()
-                console.log(data)
-                console.log(res2.status)
+                const data2 = await res2.text()
                 let listCopy = list//[...list]
-                console.log(listCopy)
-                console.log(res2.status)
                 switch (res2.status) {
                     case 200:
-                        console.log(data)
+                        console.log(data2)
                         console.log(listCopy)
                         console.log(e.target.id)
-                        console.log(listCopy.find((list) => list.id == e.target.id))
-                        listCopy.find((list) => list.id == parentlist).items=JSON.parse(data)
+                        console.log(listCopy.find((list) => list.id == parentlist))
+                        listCopy.find((list) => list.id == parentlist).items=JSON.parse(data2)
                         console.log(listCopy)
                         setList(listCopy)
                         console.log(list)
@@ -42,11 +37,11 @@ export default function NewItem({ setMsg, setStatus, status, setList, list, pare
                         
                         break;
                     case 401:
-                        setMsg(data)
+                        setMsg(data2)
                         setStatus(false)
                         break;
                     default:
-                        setMsg(data)
+                        setMsg(data2)
                 }
             
                 break;

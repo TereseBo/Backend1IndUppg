@@ -1,19 +1,24 @@
+import { useParams } from "react-router-dom";
 import { useState, useEffect } from 'react'
-import User from '../components/User'
-import Addbutton from '../components/Addbutton'
-import Itemcontainer from '../components/Itemcontainer'
-import NewItem from '../components/NewItem'
 
-export default function Listlist({ setMsg, setStatus, status }) {
+import Addbutton from "../components/Addbutton";
+import User from "../components/User";
+import Itemcontainer from "../components/Itemcontainer";
+
+
+
+export default function FriendsLists({ items, setMsg, setStatus}) {
+    const { id } = useParams()
     const [list, setList] = useState([])
-    const [items, setItems] = useState([])
-    const [pgMsg, setPgMsg] = useState('')
+    const [pgMsg, setPgMsg] = useState('Loading lists')
+
+
+
     useEffect(() => {
         async function getLists() {
-            const res = await fetch('http://localhost:5050/content/lists', { credentials: 'include' })
+            const res = await fetch(`http://localhost:5050/friends/lists?id=${id}`, { credentials: 'include' })
             const data = await res.text()
             console.log(data)
-            console.log(res.status)
             switch (res.status) {
                 case 200:
                     setList(JSON.parse(data))
@@ -26,15 +31,16 @@ export default function Listlist({ setMsg, setStatus, status }) {
                     setMsg(data)
                     setStatus(false)
                     break;
-
+                
                 default:
                     setPgMsg(data)
             }
         }
 
         getLists()
-    }, [status])
 
+        console.log(id)
+    }, [id])
     async function addItems(e) {
         console.log('addItems')
         console.log(e.target.id)
@@ -59,7 +65,7 @@ export default function Listlist({ setMsg, setStatus, status }) {
                 setMsg(`Items loaded for list ${listCopy.find((list) => list.id == e.target.id).name}`)
                 break;
             case 204:
-                setMsg(`No items to return for ${listCopy.find((list) => list.id == e.target.id).name}`)
+setMsg(`No items to return for ${listCopy.find((list) => list.id == e.target.id).name}`)
 
                 break;
             case 401:
@@ -72,25 +78,30 @@ export default function Listlist({ setMsg, setStatus, status }) {
     }
 
 
-    return (
 
-        <div>
-            {list === undefined ? <p>{pgMsg}</p> :
-                <ul>
-                    {list.map((listEntry) => (
-                        <li key={"list-" + listEntry.id}>
-                            <User key={"listname-" + listEntry.id} id={listEntry.id} name={listEntry.name} />
-                            <Addbutton id={listEntry.id} key={'button-' + listEntry.id} callback={addItems} text="Display items" />
 
-                            {listEntry.items !== undefined ? <Itemcontainer items={listEntry.items} setMsg={setMsg} setStatus={setStatus} setList={setList} list={list} parentlist={listEntry.id} /> :
-                                <NewItem setMsg={setMsg} setStatus={setMsg} setList={setList} list={list} parentlist={listEntry.id} />
+        return (
+            
+
+                <div>
+                    {list === undefined ? <p>{pgMsg}</p> :
+                        <ul>
+                            {list.map((listEntry) => (
+                                <li key={"list-" + listEntry.id}>
+                                    <User key={"listname-" + listEntry.id} id={listEntry.id} name={listEntry.name} />
+                                    <Addbutton id={listEntry.id} key={'button-' + listEntry.id} callback={addItems} text="Display items" />
+
+                                    {listEntry.items !== undefined ? <Itemcontainer items={listEntry.items} setMsg={setMsg} setStatus={setStatus} setList={setList} list={list} parentlist={listEntry.id} /> :
+                                null
 
                             }
 
-                        </li>
-                    ))}
-                </ul>
-            }
-        </div>
-    )
-}
+        
+                                </li>
+                            ))}
+                        </ul>
+                    }
+                </div>
+            
+        )
+    }

@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import User from '../components/User'
 import Addbutton from '../components/Addbutton'
+import {  Link} from "react-router-dom";
+
 
 export default function Friendlist({ setMsg, setStatus, status }) {
     const [list, setList] = useState([])
@@ -39,6 +41,7 @@ export default function Friendlist({ setMsg, setStatus, status }) {
                 {list.map((friend) => (
                     <li key={"li-" + friend.id}>
                         <User key={"friend-" + friend.id} id={friend.id} name={friend.name} />
+                        <Link to={`/friends/lists/${friend.id}`}>Wiew Lists</Link>
                     </li>
                 ))}
             </ul>
