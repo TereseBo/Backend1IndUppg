@@ -1,0 +1,21 @@
+.user-list{
+    list-style-type:none;
+    display: flex;
+    flex-direction: column;
+    
+
+
+    .user-container{
+        margin: auto;
+        display: flex;
+        flex-direction: row;
+        justify-items: center;
+        align-items: center;
+        gap:1rem;
+
+        
+
+        
+    }
+
+}

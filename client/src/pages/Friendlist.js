@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
-
+//Styles
+import './friendlist.scss'
 //Components
 import User from '../components/User'
 import Addbutton from '../components/Addbutton'
@@ -32,9 +33,9 @@ export default function Friendlist({ setMsg, setStatus, status }) {
 
     return (
         <div>
-            <ul>
+            <ul className='friend-list'>
                 {list.map((friend) => (
-                    <li key={"li-" + friend.id}>
+                    <li className='friend-container' key={"li-" + friend.id}>
                         <User key={"friend-" + friend.id} id={friend.id} name={friend.name} />
                         <Link to={`/friends/lists/${friend.id}`}>Wiew Lists</Link>
                     </li>

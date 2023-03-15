@@ -1,0 +1,32 @@
+.friend-list{
+    list-style-type:none;
+    display: flex;
+    flex-direction: column;
+    
+
+
+    .friend-container{
+        margin: auto;
+        display: flex;
+        flex-direction: row;
+        justify-items: center;
+        align-items: center;
+        gap:1rem;
+
+        a{
+            border-radius: 5px;
+            text-decoration: none;
+            color: aliceblue;
+            font-style: italic;
+            font-weight: 700;
+            padding: 0.5rem;
+            background-color: crimson;
+            border: 1px dotted purple;
+        }
+
+        
+
+        
+    }
+
+}

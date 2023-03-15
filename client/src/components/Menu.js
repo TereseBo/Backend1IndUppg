@@ -1,5 +1,8 @@
+//style
+import './menu.scss'
+
 //Components
-import Linkbox from '../components/Linkbox';
+import Linkbox from './Linkbox';
 
 export default function Menu({ status }) {
 

@@ -2,8 +2,13 @@
     //padding: 0.5rem;
 
     button{
-        padding: 0.5rem;
-        font-weight: 700;
+        border-radius: 5px;
+        text-decoration: none;
+        color: aliceblue;
         font-style: italic;
+        font-weight: 700;
+        padding: 0.5rem;
+        background-color: crimson;
+        border: 1px dotted purple;
     }
 }

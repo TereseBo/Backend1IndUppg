@@ -7,7 +7,7 @@ import Home from './components/Home';
 //Pages
 import Index from './pages/Index';
 import Listlist from './pages/Listlist';
-import Menu from './pages/Menu';
+import Menu from './components/Menu';
 import Userlist from './pages/Userlist';
 import Friendlist from './pages/Friendlist';
 import FriendsLists from './pages/FriendsLists';

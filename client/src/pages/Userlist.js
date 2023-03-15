@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react'
+//Styles
+import './userlist.scss'
 
 //Components
 import User from '../components/User'
@@ -41,9 +43,9 @@ export default function Userlist({ setMsg, setStatus, status }) {
 
     return (
         <div>
-            <ul>
+            <ul className='user-list'>
                 {list.map((friend) => (
-                    <li key={"li-" + friend.id}>
+                    <li className='user-container' key={"li-" + friend.id}>
                         <User key={"user-" + friend.id} id={friend.id} name={friend.name} />
                         <Addbutton id={friend.id} key={friend.id} callback={addFriend} text="Add friend" />
                     </li>
