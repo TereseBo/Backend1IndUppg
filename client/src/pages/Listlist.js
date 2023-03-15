@@ -78,7 +78,7 @@ export default function Listlist({ setMsg, setStatus, status }) {
                             <User key={"listname-" + listEntry.id} id={listEntry.id} name={listEntry.name} />
                             <Addbutton id={listEntry.id} key={'button-' + listEntry.id} callback={addItems} text="Display items" />
 
-                            {listEntry.items !== undefined ? <Itemcontainer setPgMsg={setPgMsg} items={listEntry.items} setMsg={setMsg} setStatus={setStatus} setList={setList} list={list} parentlist={listEntry.id} /> :
+                            {listEntry.items !== undefined ? <Itemcontainer setPgMsg={setPgMsg} items={listEntry.items} setMsg={setMsg} setStatus={setStatus} setList={setList} list={list} parentlist={listEntry.id} fetchItems={addItems}/> :
                             null }
                              <NewItem setPgMsg={setPgMsg} fetchItems={addItems} setMsg={setMsg} setStatus={setMsg} setList={setList} list={list} parentlist={listEntry.id} />
 
