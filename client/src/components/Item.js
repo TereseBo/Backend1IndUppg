@@ -1,7 +1,7 @@
 //Components
 import Addbutton from "./Addbutton"
 
-export default function Item({ item, setMsg, setStatus, setList, list, parentlist }) {
+export default function Item({ item, setMsg, setStatus, setList, list, parentlist, setPgMsg }) {
 
     async function markAsDone(e) {
         let res = await fetch(`http://localhost:5050/content/item/`, {
@@ -83,6 +83,7 @@ export default function Item({ item, setMsg, setStatus, setList, list, parentlis
                     break;
             case 401:
                 setMsg(data)
+                setPgMsg('  ')
                 setStatus(false)
                 break;
             default:

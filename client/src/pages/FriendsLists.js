@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 //Components
 import Addbutton from "../components/Addbutton";
 import User from "../components/User";
-import Itemcontainer from "../components/Itemcontainer";
+import FriendItemContainer from "../components/FriendItemContainer";
 
 export default function FriendsLists({ items, setMsg, setStatus }) {
     const { id } = useParams()
@@ -72,7 +72,7 @@ export default function FriendsLists({ items, setMsg, setStatus }) {
                             <User key={"listname-" + listEntry.id} id={listEntry.id} name={listEntry.name} />
                             <Addbutton id={listEntry.id} key={'button-' + listEntry.id} callback={addItems} text="Display items" />
 
-                            {listEntry.items !== undefined ? <Itemcontainer items={listEntry.items} setMsg={setMsg} setStatus={setStatus} setList={setList} list={list} parentlist={listEntry.id} /> :
+                            {listEntry.items !== undefined ? <FriendItemContainer items={listEntry.items} setMsg={setMsg} setStatus={setStatus} setList={setList} list={list} parentlist={listEntry.id} /> :
                                 null
                             }
                         </li>

@@ -1,11 +1,12 @@
 import { useState } from 'react'
 
-export default function NewItem({ setMsg, setStatus, status, setList, list, parentlist }) {
+export default function NewItem({ setMsg, setStatus, status, setList, list, parentlist, fetchItems , setPgMsg}) {
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
 
     async function handleSubmit(e) {
-        e.preventDefault()
+        console.log('handleSubmit ran')
+        e.preventDefault()//Prevents reload of page
         let res = await fetch(`http://localhost:5050/content/item`, {
             method: 'POST',
             headers: {
@@ -15,29 +16,16 @@ export default function NewItem({ setMsg, setStatus, status, setList, list, pare
             credentials: 'include'
         })
         const data = await res.text()
+        console.log('handlesubmit resstatus')
+        console.log(res.status)
         switch (res.status) {
             case 201:
-                let res2 = await fetch(`http://localhost:5050/content/list/?id=${parentlist}`, { credentials: 'include' })
-                const data2 = await res2.text()
-                let listCopy = list//[...list]
-                switch (res2.status) {
-                    case 200:
-                        listCopy.find((list) => list.id == parentlist).items = JSON.parse(data2)
-                        setList(listCopy)
-                        setMsg(`Items reloaded for list ${listCopy.find((list) => list.id == parentlist).name}`)
-                        break;
-                    case 204:
-                        break;
-                    case 401:
-                        setMsg(data2)
-                        setStatus(false)
-                        break;
-                    default:
-                        setMsg(data2)
-                }
-                break;
+                setPgMsg('')
+                fetchItems(e)
+                setMsg(data)
             case 401:
                 setMsg(data)
+                setPgMsg(data)
                 setStatus(false)
                 break;
             default:
@@ -46,7 +34,7 @@ export default function NewItem({ setMsg, setStatus, status, setList, list, pare
     }
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form id={parentlist} onSubmit={handleSubmit}>
             <h3>Add new todo-item</h3>
             <label>Name</label>
             <input type="text" onChange={(e) => setName(e.target.value)} />
