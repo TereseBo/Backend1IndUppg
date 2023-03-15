@@ -6,8 +6,7 @@ const itemSchema = joi.object({
 })
 
 function getItem(req, res) {
-    console.log('new get')
-    console.log(req.query)
+
     const { error, value } = itemSchema.validate(req.query)
     if (error) {
         console.log(error)
@@ -15,9 +14,8 @@ function getItem(req, res) {
         return
     }
     const { id } = value
-    console.log(id)
-    //res.status(200).send('Item NOT returned')
-     pool.execute('SELECT * FROM items WHERE id=?', [id], (err, results) => {
+
+    pool.execute('SELECT * FROM items WHERE id=?', [id], (err, results) => {
         if (err) {
             res.status(500).send(err)
             return
@@ -34,8 +32,6 @@ function getItem(req, res) {
         res.status(200).send(results)
         return
         }
-        
-
     }) 
 }
 

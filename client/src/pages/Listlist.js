@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react'
+
+//Components
 import User from '../components/User'
 import Addbutton from '../components/Addbutton'
 import Itemcontainer from '../components/Itemcontainer'
@@ -31,18 +33,12 @@ export default function Listlist({ setMsg, setStatus, status }) {
                     setPgMsg(data)
             }
         }
-
         getLists()
     }, [status])
 
     async function addItems(e) {
-        console.log('addItems')
-        console.log(e.target.id)
-        //let currentid=e.target.id
         let res2 = await fetch(`http://localhost:5050/content/list/?id=${e.target.id}`, { credentials: 'include' })
         const data = await res2.text()
-        console.log(data)
-        console.log(res2.status)
         let listCopy = list//[...list]
         console.log(listCopy)
         console.log(res2.status)
@@ -60,7 +56,6 @@ export default function Listlist({ setMsg, setStatus, status }) {
                 break;
             case 204:
                 setMsg(`No items to return for ${listCopy.find((list) => list.id == e.target.id).name}`)
-
                 break;
             case 401:
                 setMsg(data)
@@ -71,9 +66,7 @@ export default function Listlist({ setMsg, setStatus, status }) {
         }
     }
 
-
     return (
-
         <div>
             {list === undefined ? <p>{pgMsg}</p> :
                 <ul>
@@ -83,9 +76,8 @@ export default function Listlist({ setMsg, setStatus, status }) {
                             <Addbutton id={listEntry.id} key={'button-' + listEntry.id} callback={addItems} text="Display items" />
 
                             {listEntry.items !== undefined ? <Itemcontainer items={listEntry.items} setMsg={setMsg} setStatus={setStatus} setList={setList} list={list} parentlist={listEntry.id} /> :
-                                <NewItem setMsg={setMsg} setStatus={setMsg} setList={setList} list={list} parentlist={listEntry.id} />
-
-                            }
+                            null }
+                             <NewItem setMsg={setMsg} setStatus={setMsg} setList={setList} list={list} parentlist={listEntry.id} />
 
                         </li>
                     ))}

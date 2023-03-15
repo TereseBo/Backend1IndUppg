@@ -1,7 +1,6 @@
 import { useState } from "react";
 
 export default function Login({ status, setStatus, msg, setMsg }) {
-
     const [credentials, setCredentials] = useState({
         name: '',
         password: ''
@@ -9,7 +8,6 @@ export default function Login({ status, setStatus, msg, setMsg }) {
    
     async function sendLogin(e) {
         e.preventDefault();
-        console.log(credentials)
         let res = await fetch('http://localhost:5050/login', {
             method: 'POST',
             headers: {
@@ -18,12 +16,10 @@ export default function Login({ status, setStatus, msg, setMsg }) {
             body: JSON.stringify(credentials),
             credentials: 'include'
         })
-        if (res.status === 200) {
+        if (res.status === 200) {//Add other codes
             setStatus(true)
         }
-
         let data = await res.text()
-
         setMsg(data)
     }
 
@@ -32,11 +28,8 @@ export default function Login({ status, setStatus, msg, setMsg }) {
             ...credentials, [e.target.name]: e.target.value
         })
     }
-console.log(status)
-console.log(msg)
 
     return (
-
         <div className='Login'>
             {status!==true?(
                 <div>
@@ -55,6 +48,5 @@ console.log(msg)
             )
             }
         </div>
-
     )
 }

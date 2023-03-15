@@ -23,7 +23,7 @@ function logIn(req, res) {
             return;
         }
         if (results[0] && bcrypt.compareSync(password, results[0].password)) {
-            const authToken = jwt.sign({id:results[0].id, name:results[0].name}, process.env.SECRET_KEY, { expiresIn: 12000 });
+            const authToken = jwt.sign({ id: results[0].id, name: results[0].name }, process.env.SECRET_KEY, { expiresIn: 12000 });
 
             res.cookie('authToken', authToken, {
                 httpOnly: true,

@@ -7,8 +7,6 @@ const listIdSchema = joi.object({
 
 function checkListAccess(req, res, next) {
 
-    console.log(req.user.lists)
-
     const { error, value } = listIdSchema.validate(req.query)
 
     if (error) {

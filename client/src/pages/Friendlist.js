@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react'
+
+//Components
 import User from '../components/User'
 import Addbutton from '../components/Addbutton'
 import {  Link} from "react-router-dom";
-
 
 export default function Friendlist({ setMsg, setStatus, status }) {
     const [list, setList] = useState([])
@@ -10,8 +11,6 @@ export default function Friendlist({ setMsg, setStatus, status }) {
         async function getFriends() {
             const res = await fetch('http://localhost:5050/friends', { credentials: 'include' })
             const data = await res.text()
-            console.log(data)
-            console.log(res.status)
             switch (res.status) {
                 case 200:
                     setList(JSON.parse(data))
@@ -28,14 +27,10 @@ export default function Friendlist({ setMsg, setStatus, status }) {
                     setMsg(data)
             }
         }
-
         getFriends()
     }, [status])
 
-
-
     return (
-
         <div>
             <ul>
                 {list.map((friend) => (

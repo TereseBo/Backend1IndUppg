@@ -26,7 +26,6 @@ function deleteItem(req, res) {
             res.status(403).send('You are not authorized to edit this list')
             return
         }
-
         pool.execute('DELETE FROM items WHERE id=?', [id], (err, results) => {
             if (err) {
                 res.status(500).send(err)
@@ -35,6 +34,4 @@ function deleteItem(req, res) {
         })
     })
     }
-
-
 module.exports.deleteItem = deleteItem

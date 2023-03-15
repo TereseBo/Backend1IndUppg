@@ -5,9 +5,7 @@ const friendSchema = joi.object({
     id: joi.number().integer().min(1).required()
 })
 
-
 function friendLists(req,res){
-    console.log(req.query.id)
     const {error, value} = friendSchema.validate(req.query)
     if(error){
         res.status(400).send(error.details[0].message)
@@ -29,7 +27,6 @@ function friendLists(req,res){
         }
         res.status(200).send(results)
     })
-    
 }
 
 module.exports.friendLists=friendLists

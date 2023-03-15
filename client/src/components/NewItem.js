@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import { useState } from 'react'
 
 export default function NewItem({ setMsg, setStatus, status, setList, list, parentlist }) {
     const [name, setName] = useState('')
@@ -15,7 +15,6 @@ export default function NewItem({ setMsg, setStatus, status, setList, list, pare
             credentials: 'include'
         })
         const data = await res.text()
-        console.log(data)
         switch (res.status) {
             case 201:
                 let res2 = await fetch(`http://localhost:5050/content/list/?id=${parentlist}`, { credentials: 'include' })
@@ -23,18 +22,11 @@ export default function NewItem({ setMsg, setStatus, status, setList, list, pare
                 let listCopy = list//[...list]
                 switch (res2.status) {
                     case 200:
-                        console.log(data2)
-                        console.log(listCopy)
-                        console.log(e.target.id)
-                        console.log(listCopy.find((list) => list.id == parentlist))
-                        listCopy.find((list) => list.id == parentlist).items=JSON.parse(data2)
-                        console.log(listCopy)
+                        listCopy.find((list) => list.id == parentlist).items = JSON.parse(data2)
                         setList(listCopy)
-                        console.log(list)
                         setMsg(`Items reloaded for list ${listCopy.find((list) => list.id == parentlist).name}`)
                         break;
                     case 204:
-                        
                         break;
                     case 401:
                         setMsg(data2)
@@ -43,7 +35,6 @@ export default function NewItem({ setMsg, setStatus, status, setList, list, pare
                     default:
                         setMsg(data2)
                 }
-            
                 break;
             case 401:
                 setMsg(data)

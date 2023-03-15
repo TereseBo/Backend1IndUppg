@@ -2,7 +2,6 @@ const express= require('express')
 const contentRoute = express.Router()
 const cookieparser = require('cookie-parser')
 
-
 // Middlewares
 const {checkCookie} = require('../middlewares/checkCookie')
 
@@ -19,14 +18,7 @@ contentRoute.use(checkCookie)
 
 contentRoute.use('/item',itemRoute)
 contentRoute.use('/list',listRoute)
-
 contentRoute.get('/lists', getLists)
 contentRoute.get('/users', getUsers)
-
-
-
-
-
-
 
 module.exports = contentRoute

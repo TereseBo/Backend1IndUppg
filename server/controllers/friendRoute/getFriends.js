@@ -9,7 +9,6 @@ function getFriends(req, res) {
             query += '?,'
         }
         query = query.slice(0, -1)
-
         query += ')'
 
         pool.execute(query, req.user.friends, (err, results) => {
@@ -21,8 +20,7 @@ function getFriends(req, res) {
             return
         })
     }else{
-
-    res.status(204).send('No friends found')
+    res.status(204)
     return 
     }
 

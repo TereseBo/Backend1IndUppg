@@ -1,11 +1,9 @@
+//Components
 import Addbutton from "./Addbutton"
 
 export default function Item({ item, setMsg, setStatus, setList, list, parentlist }) {
 
     async function markAsDone(e) {
-        console.log(list)
-        console.log('markAsDone')
-        console.log(e.target.id)
         let res = await fetch(`http://localhost:5050/content/item/`, {
             method: 'PATCH',
             headers: {
@@ -15,19 +13,13 @@ export default function Item({ item, setMsg, setStatus, setList, list, parentlis
             credentials: 'include'
         })
         const data = await res.text()
-        console.log(data)
         switch (res.status) {
             case 200:
                 let res2 = await fetch(`http://localhost:5050/content/item?id=${e.target.id}`, { credentials: 'include' })
                 const data = await res2.text()
                 if (res2.status === 200) {
                     let returneditems = JSON.parse(data)
-                    console.log(returneditems[0])
-
-
-
                     let listCopy = list
-
                     listCopy.forEach(list => {
                         if (list.id === parentlist) {
                             list.items.forEach(item => {
@@ -40,12 +32,9 @@ export default function Item({ item, setMsg, setStatus, setList, list, parentlis
                                 }
                             });
                         }
-
                     });
-                    console.log(listCopy)
                     setList(listCopy)
                 }
-
                 setMsg('Item marked as done')
                 break;
             case 401:
@@ -57,8 +46,6 @@ export default function Item({ item, setMsg, setStatus, setList, list, parentlis
         }
     }
     async function unmarkAsDone(e, y) {
-        console.log('markAsDone')
-        console.log(e.target.id)
         let res = await fetch(`http://localhost:5050/content/item/`, {
             method: 'PATCH',
             headers: {
@@ -68,7 +55,6 @@ export default function Item({ item, setMsg, setStatus, setList, list, parentlis
             credentials: 'include'
         })
         const data = await res.text()
-        console.log(data)
         switch (res.status) {
             case 200:
                 case 200:
@@ -76,12 +62,7 @@ export default function Item({ item, setMsg, setStatus, setList, list, parentlis
                     const data = await res2.text()
                     if (res2.status === 200) {
                         let returneditems = JSON.parse(data)
-                        console.log(returneditems[0])
-    
-    
-    
                         let listCopy = list
-    
                         listCopy.forEach(list => {
                             if (list.id === parentlist) {
                                 list.items.forEach(item => {
@@ -94,12 +75,10 @@ export default function Item({ item, setMsg, setStatus, setList, list, parentlis
                                     }
                                 });
                             }
-    
                         });
                         console.log(listCopy)
                         setList(listCopy)
                     }
-    
                     setMsg('Item marked as undone')
                     break;
             case 401:
@@ -111,10 +90,6 @@ export default function Item({ item, setMsg, setStatus, setList, list, parentlis
         }
     }
 
-
-
-
-
     return (
         <div>
             <h3>{item.name}</h3>
@@ -124,5 +99,4 @@ export default function Item({ item, setMsg, setStatus, setList, list, parentlis
             }
         </div>
     )
-
 }

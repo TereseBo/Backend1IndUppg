@@ -34,9 +34,7 @@ function postFriend(req, res) {
             }
             res.status(201).send('Friend added')
         })
-
     })
-
 }
 
 module.exports.postFriend = postFriend

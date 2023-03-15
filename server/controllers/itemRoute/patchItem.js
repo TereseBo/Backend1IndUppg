@@ -7,14 +7,12 @@ const itemSchema = joi.object({
 })
 
 function patchItem(req, res) {
-    console.log('new patch')
     const { error, value } = itemSchema.validate(req.body)
     if (error) {
         res.status(400).send(error.details[0].message)
         return
     }
     const { id, completed } = value
-    console.log(id, completed)
     pool.execute('SELECT * FROM items WHERE id=?', [id], (err, results) => {
         if (err) {
             res.status(500).send(err)
@@ -30,7 +28,6 @@ function patchItem(req, res) {
             return
         }
         if (completed === 1) {
-            console.log('completed===1')
             pool.execute('UPDATE items SET completed=Now() WHERE id=?', [id], (err, results) => {
                 if (err) {
                     res.status(500).send(err)
@@ -39,19 +36,17 @@ function patchItem(req, res) {
                 res.status(200).send('Item updated')
                 return
             })
-        }else{
-        console.log('Passed if completed===1')
-        pool.execute('UPDATE items SET completed=NULL WHERE id=?', [id], (err, results) => {
-            if (err) {
-                res.status(500).send(err)
+        } else {
+            pool.execute('UPDATE items SET completed=NULL WHERE id=?', [id], (err, results) => {
+                if (err) {
+                    res.status(500).send(err)
+                    return
+                }
+                res.status(200).send('Item updated')
                 return
-            }
-            res.status(200).send('Item updated')
-            return
-        })
-    }
+            })
+        }
     })
 }
-
 
 module.exports.patchItem = patchItem
