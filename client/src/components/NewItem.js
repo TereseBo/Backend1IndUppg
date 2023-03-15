@@ -1,5 +1,8 @@
 import { useState } from 'react'
 
+//Styles
+import './newitem.scss'
+
 export default function NewItem({ setMsg, setStatus, status, setList, list, parentlist, fetchItems , setPgMsg}) {
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
@@ -34,13 +37,19 @@ export default function NewItem({ setMsg, setStatus, status, setList, list, pare
     }
 
     return (
-        <form id={parentlist} onSubmit={handleSubmit}>
+        <form className='newitem-form' id={parentlist} onSubmit={handleSubmit}>
             <h3>Add new todo-item</h3>
-            <label>Name</label>
+            <div>
+            <label>Name: </label>
             <input type="text" onChange={(e) => setName(e.target.value)} />
-            <label>Description</label>
+            </div>
+            <div>
+            <label>Description: </label>
             <input type="text" onChange={(e) => setDescription(e.target.value)} />
+            </div>
+            <div>
             <button type="submit">Add</button>
+            </div>
         </form>
     )
 }

@@ -35,15 +35,13 @@ function App() {
     <BrowserRouter>
       <header>
         <Home msg={msg} setMsg={setMsg} status={status} setStatus={setStatus} />
-        <Link to='/'>Home menu</Link>
+        {/*<Link to='/'>Home menu</Link>*/}
       </header>
       <Routes>
-        <Route path="/" element={<Menu status={status} msg={msg} setMsg={setMsg} />} />
+       {/* <Route path="/" element={<Menu status={status} msg={msg} setMsg={setMsg} />} />*/}
         <Route path="/friends" element={<Friendlist status={status} setStatus={setStatus} setMsg={setMsg} />} />
         <Route path="/friends/new" element={<Userlist status={status} setStatus={setStatus} setMsg={setMsg} />} />
         <Route path="/lists" element={<Listlist status={status} setStatus={setStatus} setMsg={setMsg} />} />
-        <Route path="/lists/new" element={<Index />} />
-        <Route path="/lists/:id" element={<Index />} />
         <Route path="/friends/lists/:id" element={<FriendsLists status={status} setStatus={setStatus} setMsg={setMsg} />} />
       </Routes>
     </BrowserRouter>

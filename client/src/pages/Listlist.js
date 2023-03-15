@@ -1,15 +1,21 @@
 import { useState, useEffect } from 'react'
 
+//Style
+import './listlist.scss'
+
+
 //Components
 import User from '../components/User'
 import Addbutton from '../components/Addbutton'
 import Itemcontainer from '../components/Itemcontainer'
 import NewItem from '../components/NewItem'
+import NewList from '../components/NewList'
 
 export default function Listlist({ setMsg, setStatus, status }) {
     const [list, setList] = useState([])
     const [items, setItems] = useState([])
     const [pgMsg, setPgMsg] = useState('')
+    const [tracker, setTracker] = useState(0)
     useEffect(() => {
         async function getLists() {
             console.log('useeffect get lists ran')
@@ -38,7 +44,7 @@ export default function Listlist({ setMsg, setStatus, status }) {
             }
         }
         getLists()
-    }, [status])
+    }, [])
 
     async function addItems(e) {
         console.log('addItems ran')
@@ -69,22 +75,58 @@ export default function Listlist({ setMsg, setStatus, status }) {
         }
     }
 
+    async function deleteList(e) {
+        console.log(e.target.id)
+        console.log('deleteList ran')
+        let res = await fetch(`http://localhost:5050/content/list/?id=${e.target.id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            //body: JSON.stringify({ id: e.target.id }),
+            credentials: 'include'
+        })
+        const data = await res.text()
+        switch (res.status) {
+            case 200:
+                setMsg(data)
+                setPgMsg('')
+                setTracker(tracker + 1)
+                break;
+            case 401:
+                setMsg(data)
+                setPgMsg('  ')
+                setStatus(false)
+                break;
+            default:
+                setMsg(data)
+                break
+        }
+    }
+
     return (
         <div>
             {pgMsg !== '' ? <p>{pgMsg}</p> :
-                <ul>
+            <div className='listlist-container'>
+                <NewList setMsg={setMsg} setStatus={setStatus} status={status} setList={setList} list={list} setPgMsg={setPgMsg}/>
+                <ul className='listlist'>
                     {list.map((listEntry) => (
-                        <li key={"list-" + listEntry.id}>
+                        <li className='list-container' key={"list-" + listEntry.id}>
+                            <div className='list-header'>
                             <User key={"listname-" + listEntry.id} id={listEntry.id} name={listEntry.name} />
-                            <Addbutton id={listEntry.id} key={'button-' + listEntry.id} callback={addItems} text="Display items" />
+                            <Addbutton id={listEntry.id} key={'Dispbutton-' + listEntry.id} callback={addItems} text="Display items" />
+                            <Addbutton id={listEntry.id} key={'Delbutton-' + listEntry.id} callback={deleteList} text="Delete list" />
+                            </div>
+                            <NewItem setPgMsg={setPgMsg} fetchItems={addItems} setMsg={setMsg} setStatus={setMsg} setList={setList} list={list} parentlist={listEntry.id} />
+
 
                             {listEntry.items !== undefined ? <Itemcontainer setPgMsg={setPgMsg} items={listEntry.items} setMsg={setMsg} setStatus={setStatus} setList={setList} list={list} parentlist={listEntry.id} fetchItems={addItems}/> :
                             null }
-                             <NewItem setPgMsg={setPgMsg} fetchItems={addItems} setMsg={setMsg} setStatus={setMsg} setList={setList} list={list} parentlist={listEntry.id} />
 
                         </li>
                     ))}
                 </ul>
+                </div>
             }
         </div>
     )

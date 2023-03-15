@@ -1,7 +1,10 @@
+//Style
+import './item.scss'
+
 //Components
 import Addbutton from "./Addbutton"
 
-export default function Item({ item, setMsg, setStatus, setList, list, parentlist, setPgMsg, fetchItems }) {
+export default function Item({ item, setMsg, setStatus, setList, list, parentlist, setPgMsg }) {
 
     async function markAsDone(e) {
         let res = await fetch(`http://localhost:5050/content/item/`, {
@@ -56,31 +59,10 @@ export default function Item({ item, setMsg, setStatus, setList, list, parentlis
         })
         const data = await res.text()
         switch (res.status) {
+
             case 200:
-                case 200:
-                    let res2 = await fetch(`http://localhost:5050/content/item?id=${e.target.id}`, { credentials: 'include' })
-                    const data = await res2.text()
-                    if (res2.status === 200) {
-                        let returneditems = JSON.parse(data)
-                        let listCopy = list
-                        listCopy.forEach(list => {
-                            if (list.id === parentlist) {
-                                list.items.forEach(item => {
-                                    if (item.id == e.target.id) {
-                                        console.log('found')
-                                        console.log(item)
-                                        console.log(item.id)
-                                        item.completed = returneditems[0].completed
-                                        console.log(item)
-                                    }
-                                });
-                            }
-                        });
-                        console.log(listCopy)
-                        setList(listCopy)
-                    }
-                    setMsg('Item marked as undone')
-                    break;
+                updateItem(e.target.id)
+            break;
             case 401:
                 setMsg(data)
                 setPgMsg('  ')
@@ -90,10 +72,34 @@ export default function Item({ item, setMsg, setStatus, setList, list, parentlis
                 setMsg(data)
         }
     }
+    async function updateItem(itemId) {
+        let res2 = await fetch(`http://localhost:5050/content/item?id=${itemId}`, { credentials: 'include' })
+        const data2 = await res2.text()
+        if (res2.status === 200) {
+            let returneditems = JSON.parse(data2)
+            let listCopy = list
+            listCopy.forEach(list => {
+                if (list.id === parentlist) {
+                    list.items.forEach(item => {
+                        if (item.id == itemId) {
+                            console.log('found')
+                            console.log(item)
+                            console.log(item.id)
+                            item.completed = returneditems[0].completed
+                            console.log(item)
+                        }
+                    });
+                }
+            });
+            console.log(listCopy)
+            setList(listCopy)
+        }
+        setMsg('Item marked as undone')
+    
+    }
 
     async function deleteItem(e) {
 
-        console.log(parentlist)
         let res = await fetch(`http://localhost:5050/content/item/`, {
             method: 'DELETE',
             headers: {
@@ -119,12 +125,10 @@ export default function Item({ item, setMsg, setStatus, setList, list, parentlis
     }
 
     async function refetchItems(listId) {
-        
+
         let res2 = await fetch(`http://localhost:5050/content/list/?id=${listId}`, { credentials: 'include' })
         const data = await res2.text()
         let listCopy = list//[...list]
-        console.log(res2.status)
-        console.log(data)
         switch (res2.status) {
             case 200:
                 setPgMsg('')
@@ -134,6 +138,8 @@ export default function Item({ item, setMsg, setStatus, setList, list, parentlis
                 break;
             case 204:
                 setMsg(`No items to return for ${listCopy.find((list) => list.id == listId).name}`)
+                delete listCopy.find((list) => list.id == listId).items
+                setList(listCopy)
                 break;
             case 401:
                 setMsg(data)
@@ -148,13 +154,21 @@ export default function Item({ item, setMsg, setStatus, setList, list, parentlis
 
 
     return (
-        <div id={parentlist}>
+        <div className="item" id={parentlist}>
             <h3>{item.name}</h3>
             <p>{item.description}</p>
             <p><span>created: </span>{item.created}</p>
-            {item.completed === null ? (<div><p><span>completed: </span>{item.completed} </p><Addbutton id={item.id} text="Done" callback={markAsDone} /></div>) : (<div><p><span>completed: </span>{item.completed} </p> <Addbutton id={item.id} text="Unmark as done" callback={unmarkAsDone} /></div>)
+            {item.completed !== null ?
+            (<p><span>completed: </span>{item.completed} </p>)
+            :(<p>Not done</p>) }
+            <div className="button-container">
+            {item.completed === null ? 
+            (<Addbutton id={item.id} text="Mark as done" callback={markAsDone} />) 
+            : 
+            ( <Addbutton id={item.id} text="Unmark as done" callback={unmarkAsDone} />)
             }
-            <Addbutton data-parent={parentlist} id={item.id} text="Delete" callback={deleteItem} parentlist={parentlist} />
+            <Addbutton id={item.id} text="Delete" callback={deleteItem} />
+            </div>
         </div>
     )
 }
