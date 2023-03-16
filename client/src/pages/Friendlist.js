@@ -19,7 +19,7 @@ export default function Friendlist({ setMsg, setStatus, status }) {
                     setPgMsg('Friendlist loaded')
                     break;
                 case 204:
-                    setPgMsg("Nothing to return")
+                    setPgMsg("No friends yet, add some!")
                     break;
                 case 401:
                     setPgMsg('')

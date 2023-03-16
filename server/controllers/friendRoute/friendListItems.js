@@ -32,7 +32,7 @@ function friendListItems(req,res){
                 return
             }
             if(results.length===0){
-                res.status(200).send('This list has no items')
+                res.status(204).send()
                 return
             }
             res.status(200).send(results)

@@ -20,7 +20,7 @@ function getFriends(req, res) {
             return
         })
     }else{
-    res.status(204)
+    res.status(204).send()
     return 
     }
 

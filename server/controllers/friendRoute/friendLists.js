@@ -22,7 +22,7 @@ function friendLists(req,res){
             return
         }
         if(results.length===0){
-            res.status(200).send('This user has no lists')
+            res.status(204).send()
             return
         }
         res.status(200).send(results)
