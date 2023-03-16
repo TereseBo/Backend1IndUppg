@@ -44,13 +44,9 @@ export default function Listlist({ setMsg, setStatus, status }) {
     }, [status])
 
     async function addItems(e) {
-        console.log('addItems ran')
-
         let res2 = await fetch(`http://localhost:5050/content/list/?id=${e.target.id}`, { credentials: 'include' })
         const data = await res2.text()
         let listCopy = list//[...list]
-        console.log('add items resstatus')
-        console.log(res2.status)
         switch (res2.status) {
             case 200:
                 setMsg('')
@@ -109,7 +105,6 @@ export default function Listlist({ setMsg, setStatus, status }) {
                 break;
             case 204:
                 setMsg('')
-                //setPgMsg("No Lists found")
                 setList([])
                 break;
             case 401:

@@ -112,7 +112,7 @@ export default function Item({ item, setMsg, setStatus, setList, list, parentlis
         switch (res.status) {
             case 200:
                 refetchItems(parentlist)
-                setMsg('Item deleted')
+                setPgMsg('Item deleted')
                 break;
             case 401:
                 setMsg(data)
@@ -131,13 +131,12 @@ export default function Item({ item, setMsg, setStatus, setList, list, parentlis
         let listCopy = list//[...list]
         switch (res2.status) {
             case 200:
-                setPgMsg('')
                 listCopy.find((list) => list.id == listId).items = JSON.parse(data)
                 setList(listCopy)
                 setMsg(`Items loaded for list ${listCopy.find((list) => list.id == listId).name}`)
                 break;
             case 204:
-                setMsg(`No items to return for ${listCopy.find((list) => list.id == listId).name}`)
+                setPgMsg(`No items left in ${listCopy.find((list) => list.id == listId).name}`)
                 delete listCopy.find((list) => list.id == listId).items
                 setList(listCopy)
                 break;
@@ -147,7 +146,7 @@ export default function Item({ item, setMsg, setStatus, setList, list, parentlis
                 setStatus(false)
                 break;
             default:
-                setMsg(data)
+                setPgMsg(data)
                 break
         }
     }
