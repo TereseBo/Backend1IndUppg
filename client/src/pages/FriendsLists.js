@@ -6,7 +6,7 @@ import Addbutton from "../components/Addbutton";
 import User from "../components/User";
 import FriendItemContainer from "../components/FriendItemContainer";
 
-export default function FriendsLists({ items, setMsg, setStatus }) {
+export default function FriendsLists({ items, setMsg, setStatus, status }) {
     const { id } = useParams()
     const [list, setList] = useState([])
     const [pgMsg, setPgMsg] = useState('Loading lists')
@@ -18,7 +18,7 @@ export default function FriendsLists({ items, setMsg, setStatus }) {
             switch (res.status) {
                 case 200:
                     setList(JSON.parse(data))
-                    setMsg('Lists loaded')
+                    setPgMsg('')
                     break;
                 case 204:
                     setPgMsg("No Lists found")
@@ -41,18 +41,12 @@ export default function FriendsLists({ items, setMsg, setStatus }) {
         let listCopy = list//[...list]
         switch (res2.status) {
             case 200:
-                console.log(data)
-                console.log(listCopy)
-                console.log(e.target.id)
-                console.log(listCopy.find((list) => list.id == e.target.id))
                 listCopy.find((list) => list.id == e.target.id).items = JSON.parse(data)
-                console.log(listCopy)
                 setList(listCopy)
-                console.log(list)
-                setMsg(`Items loaded for list ${listCopy.find((list) => list.id == e.target.id).name}`)
+                setPgMsg(`Items loaded for list ${listCopy.find((list) => list.id == e.target.id).name}`)
                 break;
             case 204:
-                setMsg(`No items to return for ${listCopy.find((list) => list.id == e.target.id).name}`)
+                setPgMsg(`No items to return for ${listCopy.find((list) => list.id == e.target.id).name}`)
 
                 break;
             case 401:
@@ -60,12 +54,15 @@ export default function FriendsLists({ items, setMsg, setStatus }) {
                 setStatus(false)
                 break;
             default:
-                setMsg(data)
+                setPgMsg(data)
         }
     }
     return (
         <div>
-            {list === undefined ? <p>{pgMsg}</p> :
+            {status === false ? null : (
+                <div>
+            {pgMsg===''?null:<p>{pgMsg}</p>}
+            {list === undefined ? null :
                 <ul>
                     {list.map((listEntry) => (
                         <li key={"list-" + listEntry.id}>
@@ -79,6 +76,8 @@ export default function FriendsLists({ items, setMsg, setStatus }) {
                     ))}
                 </ul>
             }
+            </div>
+            )}
         </div>
     )
 }

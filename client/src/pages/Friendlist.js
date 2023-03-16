@@ -8,6 +8,7 @@ import {  Link} from "react-router-dom";
 
 export default function Friendlist({ setMsg, setStatus, status }) {
     const [list, setList] = useState([])
+    const [pgMsg, setPgMsg] = useState('')
     useEffect(() => {
         async function getFriends() {
             const res = await fetch('http://localhost:5050/friends', { credentials: 'include' })
@@ -15,17 +16,18 @@ export default function Friendlist({ setMsg, setStatus, status }) {
             switch (res.status) {
                 case 200:
                     setList(JSON.parse(data))
-                    setMsg('Friendlist loaded')
+                    setPgMsg('Friendlist loaded')
                     break;
                 case 204:
-                    setMsg("Nothing to return")
+                    setPgMsg("Nothing to return")
                     break;
                 case 401:
+                    setPgMsg('')
                     setMsg(data)
                     setStatus(false)
                     break;
                 default:
-                    setMsg(data)
+                    setPgMsg(data)
             }
         }
         getFriends()
@@ -33,6 +35,7 @@ export default function Friendlist({ setMsg, setStatus, status }) {
 
     return (
         <div>
+            {pgMsg===''?null:<p>{pgMsg}</p>}
             <ul className='friend-list'>
                 {list.map((friend) => (
                     <li className='friend-container' key={"li-" + friend.id}>

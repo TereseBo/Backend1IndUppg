@@ -8,6 +8,7 @@ export default function NewItem({ setMsg, setStatus, status, setList, list, pare
     const [description, setDescription] = useState('')
 
     async function handleSubmit(e) {
+        console.log('handleSubmit ran')
         e.preventDefault()//Prevents reload of page
         let res = await fetch(`http://localhost:5050/content/item`, {
             method: 'POST',
@@ -35,6 +36,8 @@ export default function NewItem({ setMsg, setStatus, status, setList, list, pare
         }
     }
     async function refetchItems(e) {
+        console.log('refetch ran')
+
         let res2 = await fetch(`http://localhost:5050/content/list/?id=${e.target.id}`, { credentials: 'include' })
         const data = await res2.text()
         let listCopy = list//[...list]
@@ -43,13 +46,14 @@ export default function NewItem({ setMsg, setStatus, status, setList, list, pare
                 setMsg('')
                 listCopy.find((list) => list.id == e.target.id).items = JSON.parse(data)
                 setList(listCopy)
+                //setPgMsg(`Items loaded for list ${listCopy.find((list) => list.id == e.target.id).name}`)
                 break;
             case 204:
                 setMsg('')
                 break;
             case 401:
                 setMsg(data)
-                setPgMsg('  ')
+                setPgMsg('')
                 setStatus(false)
                 break;
             default:
