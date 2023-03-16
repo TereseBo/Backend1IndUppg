@@ -3,7 +3,7 @@ import { useState } from 'react'
 //Styles
 import './newitem.scss'
 
-export default function NewItem({ setMsg, setStatus, status, setList, list, parentlist, fetchItems , setPgMsg}) {
+export default function NewItem({ setMsg, setStatus, status, setList, list, parentlist,  setPgMsg}) {
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
 
@@ -24,7 +24,7 @@ export default function NewItem({ setMsg, setStatus, status, setList, list, pare
         switch (res.status) {
             case 201:
                 setPgMsg('')
-                fetchItems(e)
+                refetchItems(e)
                 setMsg(data)
             case 401:
                 setMsg(data)
@@ -35,6 +35,34 @@ export default function NewItem({ setMsg, setStatus, status, setList, list, pare
                 setMsg(data)
         }
     }
+    async function refetchItems(e) {
+        console.log('refetch ran')
+
+        let res2 = await fetch(`http://localhost:5050/content/list/?id=${e.target.id}`, { credentials: 'include' })
+        const data = await res2.text()
+        let listCopy = list//[...list]
+        console.log('add items resstatus')
+        console.log(res2.status)
+        switch (res2.status) {
+            case 200:
+                setMsg('')
+                listCopy.find((list) => list.id == e.target.id).items = JSON.parse(data)
+                setList(listCopy)
+                break;
+            case 204:
+                setMsg('')
+                break;
+            case 401:
+                setMsg(data)
+                setPgMsg('  ')
+                setStatus(false)
+                break;
+            default:
+                setPgMsg(data)
+                break
+        }
+    }
+
 
     return (
         <form className='newitem-form' id={parentlist} onSubmit={handleSubmit}>
