@@ -1,4 +1,5 @@
 import { useState } from "react";
+import {Link} from 'react-router-dom';
 
 export default function Login({ status, setStatus, msg, setMsg }) {
     const [credentials, setCredentials] = useState({
@@ -40,7 +41,9 @@ export default function Login({ status, setStatus, msg, setMsg }) {
                     <label htmlFor="password">Password</label>
                     <input type="current-password" name="password" id="password" />
                     <input type="submit" value="Login" />
+                   
                 </form>
+                <Link to='/register'>Register</Link>
                 <p>{msg}</p>
                 </div>
             ):(

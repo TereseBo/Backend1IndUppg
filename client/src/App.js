@@ -11,6 +11,7 @@ import Menu from './components/Menu';
 import Userlist from './pages/Userlist';
 import Friendlist from './pages/Friendlist';
 import FriendsLists from './pages/FriendsLists';
+import Register from './pages/Register';
 
 function App() {
   const [msg, setMsg] = useState('')
@@ -35,10 +36,9 @@ function App() {
     <BrowserRouter>
       <header>
         <Home msg={msg} setMsg={setMsg} status={status} setStatus={setStatus} />
-        {/*<Link to='/'>Home menu</Link>*/}
       </header>
       <Routes>
-       {/* <Route path="/" element={<Menu status={status} msg={msg} setMsg={setMsg} />} />*/}
+       <Route path="/register" element={<Register status={status} msg={msg} setMsg={setMsg} />} />
         <Route path="/friends" element={<Friendlist status={status} setStatus={setStatus} setMsg={setMsg} />} />
         <Route path="/friends/new" element={<Userlist status={status} setStatus={setStatus} setMsg={setMsg} />} />
         <Route path="/lists" element={<Listlist status={status} setStatus={setStatus} setMsg={setMsg} />} />
