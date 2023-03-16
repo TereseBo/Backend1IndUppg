@@ -6,6 +6,7 @@ import "./friendslists.scss"
 import Addbutton from "../components/Addbutton";
 import User from "../components/User";
 import FriendItemContainer from "../components/FriendItemContainer";
+import Msgbox from '../components/Msgbox';
 
 export default function FriendsLists({ items, setMsg, setStatus, status }) {
     const { id } = useParams()
@@ -62,7 +63,7 @@ export default function FriendsLists({ items, setMsg, setStatus, status }) {
             {status ? (
 
                 <div>
-                    {pgMsg === '' ? null : <p>{pgMsg}</p>}
+                    {pgMsg === '' ? null : <Msgbox msg={pgMsg}/>}
                     <div className="friendslists-container">
                         <ul className="friendslists">
                             {list.map((listEntry) => (

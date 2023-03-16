@@ -5,6 +5,7 @@ import './userlist.scss'
 //Components
 import User from '../components/User'
 import Addbutton from '../components/Addbutton'
+import Msgbox from '../components/Msgbox';
 
 export default function Userlist({ setMsg, setStatus, status }) {
     const [list, setList] = useState([])
@@ -62,7 +63,7 @@ export default function Userlist({ setMsg, setStatus, status }) {
 
     return (
         <div>
-            {pgMsg==='' ? null : <p>{pgMsg}</p>}
+            {pgMsg==='' ? null : <Msgbox msg={pgMsg}/>}
             <ul className='user-list'>
                 {list.map((friend) => (
                     <li className='user-container' key={"li-" + friend.id}>

@@ -1,13 +1,11 @@
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import { useState, useEffect } from "react";
-import './App.css';
+import './App.scss';
 
 //Components
 import Home from './components/Home';
 //Pages
-import Index from './pages/Index';
 import Listlist from './pages/Listlist';
-import Menu from './components/Menu';
 import Userlist from './pages/Userlist';
 import Friendlist from './pages/Friendlist';
 import FriendsLists from './pages/FriendsLists';
@@ -32,7 +30,7 @@ function App() {
     checkLogin()
   }, [])
   return (
-
+<div className='App'>
     <BrowserRouter>
       <header>
         <Home msg={msg} setMsg={setMsg} status={status} setStatus={setStatus} />
@@ -45,6 +43,8 @@ function App() {
         <Route path="/friends/lists/:id" element={<FriendsLists status={status} setStatus={setStatus} setMsg={setMsg} />} />
       </Routes>
     </BrowserRouter>
+    
+</div>
   );
 }
 

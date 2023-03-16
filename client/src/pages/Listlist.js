@@ -10,6 +10,7 @@ import Addbutton from '../components/Addbutton'
 import Itemcontainer from '../components/Itemcontainer'
 import NewItem from '../components/NewItem'
 import NewList from '../components/NewList'
+import Msgbox from '../components/Msgbox';
 
 export default function Listlist({ setMsg, setStatus, status }) {
     const [list, setList] = useState([])
@@ -23,7 +24,7 @@ export default function Listlist({ setMsg, setStatus, status }) {
                 case 200:
                     setList(JSON.parse(data))
                     setMsg('')
-                    setPgMsg('Lists loaded')
+                    setPgMsg('')
                     break;
                 case 204:
                     setMsg('')
@@ -123,7 +124,7 @@ export default function Listlist({ setMsg, setStatus, status }) {
             {status ? (
 
             <div>
-                {pgMsg !== '' ? <p>{pgMsg}</p> : null}
+                {pgMsg !== '' ? <Msgbox msg={pgMsg}/> : null}
                 <div className='listlist-container'>
                     <NewList setMsg={setMsg} setStatus={setStatus} status={status} setList={setList} list={list} setPgMsg={setPgMsg} />
                     <ul className='listlist'>

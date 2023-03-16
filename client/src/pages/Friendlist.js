@@ -5,6 +5,7 @@ import './friendlist.scss'
 import User from '../components/User'
 import Addbutton from '../components/Addbutton'
 import {  Link} from "react-router-dom";
+import Msgbox from '../components/Msgbox';
 
 export default function Friendlist({ setMsg, setStatus, status }) {
     const [list, setList] = useState([])
@@ -16,7 +17,7 @@ export default function Friendlist({ setMsg, setStatus, status }) {
             switch (res.status) {
                 case 200:
                     setList(JSON.parse(data))
-                    setPgMsg('Friendlist loaded')
+                    setPgMsg('')
                     break;
                 case 204:
                     setPgMsg("No friends yet, add some!")
@@ -35,7 +36,7 @@ export default function Friendlist({ setMsg, setStatus, status }) {
 
     return (
         <div>
-            {pgMsg===''?null:<p>{pgMsg}</p>}
+            {pgMsg===''?null:<Msgbox msg={pgMsg}/>}
             <ul className='friend-list'>
                 {list.map((friend) => (
                     <li className='friend-container' key={"li-" + friend.id}>

@@ -9,7 +9,6 @@ function getLists(req, res) {
             res.status(204).send()
             return
         }
-        console.log('lists found')
         res.status(200).send(results)
     })
 }

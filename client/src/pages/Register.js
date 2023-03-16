@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Link } from 'react-router-dom';
 
+//Components
+import Msgbox from '../components/Msgbox';
 export default function Register({ status, setStatus, msg, setMsg }) {
     const [credentials, setCredentials] = useState({
         name: '',
@@ -33,7 +35,7 @@ export default function Register({ status, setStatus, msg, setMsg }) {
     }
 
     return (
-        <div className='Login'>
+        <div className='Register'>
             {status !== true ? (
                 <div>
                     <form onChange={saveChange} onSubmit={sendRegistration}>
@@ -45,7 +47,7 @@ export default function Register({ status, setStatus, msg, setMsg }) {
                         <input type="submit" value="Login" />
 
                     </form>
-                    <p>{pgMsg}</p>
+                    <Msgbox msg={pgMsg}/>
                 </div>
             ) : (
                 <p>You are already logged in</p>

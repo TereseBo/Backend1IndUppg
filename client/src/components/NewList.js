@@ -1,3 +1,5 @@
+//Styles
+import './newlist.scss'
 export default function NewList({setMsg, setStatus, status, setList, list, setPgMsg}){
     async function postList(e){
         e.preventDefault()
@@ -55,11 +57,15 @@ export default function NewList({setMsg, setStatus, status, setList, list, setPg
 
     return(
         <div>
-            <h2>Create a new list</h2>
-            <form onSubmit={postList}>
+            <form className='newlist-form' onSubmit={postList}>
+            <h3>Create a new list</h3>
+            <div>
                 <label htmlFor="listname">List name</label>
                 <input type="text" id="listname" name="listname" />
+                </div>
+                <div>
                 <input type="submit" value="Create" />
+                </div>
             </form>
         </div>
         )

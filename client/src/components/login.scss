@@ -1,0 +1,53 @@
+.loginform-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+   // width: 50%;
+    background-color: rgb(241, 178, 220);
+    padding: 1rem;
+    gap: 2rem;
+
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+
+        label {
+            margin-right: 0.3rem;
+        }
+
+        input[type=submit] {
+            font-family: 'Courier New', Courier, monospace;
+            margin: auto;
+            min-width: 20%;
+            border: 1px ridge darkslateblue;
+            border-radius: 5px;
+            color: aliceblue;
+            font-style: italic;
+            font-weight: 700;
+            padding: 0.3rem;
+            background-color: rgb(166, 36, 136);
+        }
+
+
+
+
+
+    }
+    a {
+        align-self: start;
+        border-radius: 5px;
+        text-decoration: none;
+        color: aliceblue;
+        font-family: 'Courier New', Courier, monospace;
+        font-style: italic;
+        font-weight: 700;
+        padding: 0.5rem;
+        background-color: rgb(166, 36, 136);
+        border: 1px ridge darkslateblue;
+
+    }
+}
