@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Link } from 'react-router-dom';
-
 //Style
 import "./register.scss";
 //Components
 import Msgbox from '../components/Msgbox';
-export default function Register({ status, setStatus, msg, setMsg }) {
+
+export default function Register({ status, setMsg }) {
     const [credentials, setCredentials] = useState({
         name: '',
         password: ''
@@ -24,7 +24,6 @@ export default function Register({ status, setStatus, msg, setMsg }) {
             credentials: 'include'
         })
         let data = await res.text()
-        setMsg(data)
         if (res) {
             setPgMsg(data)
             e.target.reset()
@@ -42,19 +41,17 @@ export default function Register({ status, setStatus, msg, setMsg }) {
             {status !== true ? (
                 <div className="register-box">
                     <div className="registerform-container">
-                    <h1>Register</h1>
+                        <h1>Register</h1>
                         <form className="register-form" onChange={saveChange} onSubmit={sendRegistration}>
                             <div>
-                            <label htmlFor="name">Username</label>
-                            <input type="text" name="name" id="name" />
+                                <label htmlFor="name">Username</label>
+                                <input type="text" name="name" id="name" />
                             </div>
                             <div>
-                            <label htmlFor="password">Password</label>
-                            <input type="current-password" name="password" id="password" />
+                                <label htmlFor="password">Password</label>
+                                <input type="current-password" name="password" id="password" />
                             </div>
-
                             <input type="submit" value="Register" />
-
                         </form>
                     </div>
                     <Msgbox msg={pgMsg} />

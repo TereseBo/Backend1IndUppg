@@ -1,4 +1,3 @@
-
 import './addbutton.scss'
 
 export default function Addbutton({ id, callback, text}){

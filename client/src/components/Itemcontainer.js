@@ -1,10 +1,10 @@
 //Style
 import './itemcontainer.scss'
-
 //Components
 import Item from './Item'
 
 export default function Itemcontainer({ items, setMsg, setStatus, setList, list, parentlist, setPgMsg }) {
+   
     return (
         <div className='itemlist-container'>
             {items === undefined ? <p>No items</p> :

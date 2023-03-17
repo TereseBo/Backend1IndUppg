@@ -1,6 +1,5 @@
 //Style
 import './item.scss'
-
 //Components
 import Addbutton from "./Addbutton"
 
@@ -93,8 +92,6 @@ export default function Item({ item, setMsg, setStatus, setList, list, parentlis
     }
 
     async function deleteItem(e) {
-        console.log('delete ran')
-
         let res = await fetch(`http://localhost:5050/content/item/`, {
             method: 'DELETE',
             headers: {
@@ -121,8 +118,6 @@ export default function Item({ item, setMsg, setStatus, setList, list, parentlis
     }
 
     async function refetchItems(listId) {
-
-        console.log('refetch ran')
         let res2 = await fetch(`http://localhost:5050/content/list/?id=${listId}`, { credentials: 'include' })
         const data = await res2.text()
         let listCopy = list

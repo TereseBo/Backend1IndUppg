@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react'
 //Styles
 import './userlist.scss'
-
 //Components
-import User from '../components/User'
 import Addbutton from '../components/Addbutton'
-import Msgbox from '../components/Msgbox';
+import Msgbox from '../components/Msgbox'
+import User from '../components/User'
 
 export default function Userlist({ setMsg, setStatus, status }) {
     const [list, setList] = useState([])
@@ -32,9 +31,9 @@ export default function Userlist({ setMsg, setStatus, status }) {
                 default:
                     setMsg('')
                     setPgMsg(data)
+                    break;
             }
         }
-
         getUser()
     }, [status])
 
@@ -49,7 +48,6 @@ export default function Userlist({ setMsg, setStatus, status }) {
         })
         const data = await res.text()
         switch (res.status) {
-
             case 401:
                 setMsg(data)
                 setPgMsg('')
@@ -63,7 +61,7 @@ export default function Userlist({ setMsg, setStatus, status }) {
 
     return (
         <div>
-            {pgMsg==='' ? null : <Msgbox msg={pgMsg}/>}
+            {pgMsg === '' ? null : <Msgbox msg={pgMsg} />}
             <ul className='user-list'>
                 {list.map((friend) => (
                     <li className='user-container' key={"li-" + friend.id}>

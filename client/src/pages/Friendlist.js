@@ -1,18 +1,19 @@
 import { useState, useEffect } from 'react'
+import {  Link} from "react-router-dom";
 //Styles
 import './friendlist.scss'
 //Components
-import User from '../components/User'
-import Addbutton from '../components/Addbutton'
-import {  Link} from "react-router-dom";
 import Msgbox from '../components/Msgbox';
+import User from '../components/User'
 
 export default function Friendlist({ setMsg, setStatus, status }) {
     const [list, setList] = useState([])
     const [pgMsg, setPgMsg] = useState('')
+   
     useEffect(() => {
         async function getFriends() {
-            const res = await fetch('http://localhost:5050/friends', { credentials: 'include' })
+            const res = await fetch('http://localhost:5050/friends', 
+            { credentials: 'include' })
             const data = await res.text()
             switch (res.status) {
                 case 200:
@@ -29,6 +30,7 @@ export default function Friendlist({ setMsg, setStatus, status }) {
                     break;
                 default:
                     setPgMsg(data)
+                    break;
             }
         }
         getFriends()
@@ -36,7 +38,7 @@ export default function Friendlist({ setMsg, setStatus, status }) {
 
     return (
         <div>
-            {pgMsg===''?null:<Msgbox msg={pgMsg}/>}
+           <Msgbox msg={pgMsg}/>
             <ul className='friend-list'>
                 {list.map((friend) => (
                     <li className='friend-container' key={"li-" + friend.id}>

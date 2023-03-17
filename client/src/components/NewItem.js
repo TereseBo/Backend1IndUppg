@@ -1,15 +1,13 @@
 import { useState } from 'react'
-
 //Styles
 import './newitem.scss'
 
-export default function NewItem({ setMsg, setStatus, status, setList, list, parentlist,  setPgMsg}) {
+export default function NewItem({ setMsg, setStatus, setList, list, parentlist, setPgMsg }) {
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
 
     async function handleSubmit(e) {
-        console.log('handleSubmit ran')
-        e.preventDefault()//Prevents reload of page
+        e.preventDefault()
         let res = await fetch(`http://localhost:5050/content/item`, {
             method: 'POST',
             headers: {
@@ -19,13 +17,12 @@ export default function NewItem({ setMsg, setStatus, status, setList, list, pare
             credentials: 'include'
         })
         const data = await res.text()
-        console.log('handlesubmit resstatus')
-        console.log(res.status)
         switch (res.status) {
             case 201:
                 setPgMsg('')
                 refetchItems(e)
                 setMsg(data)
+                break;
             case 401:
                 setMsg(data)
                 setPgMsg(data)
@@ -33,18 +30,18 @@ export default function NewItem({ setMsg, setStatus, status, setList, list, pare
                 break;
             default:
                 setPgMsg(data)
+                break;
         }
     }
     async function refetchItems(e) {
         let res2 = await fetch(`http://localhost:5050/content/list/?id=${e.target.id}`, { credentials: 'include' })
         const data = await res2.text()
-        let listCopy = list//[...list]
+        let listCopy = list
         switch (res2.status) {
             case 200:
                 setMsg('')
                 listCopy.find((list) => list.id == e.target.id).items = JSON.parse(data)
                 setList(listCopy)
-                //setPgMsg(`Items loaded for list ${listCopy.find((list) => list.id == e.target.id).name}`)
                 break;
             case 204:
                 setMsg('')
@@ -60,20 +57,19 @@ export default function NewItem({ setMsg, setStatus, status, setList, list, pare
         }
     }
 
-
     return (
         <form className='newitem-form' id={parentlist} onSubmit={handleSubmit}>
             <h3>Add new todo-item</h3>
             <div>
-            <label>Name: </label>
-            <input type="text" onChange={(e) => setName(e.target.value)} />
+                <label>Name: </label>
+                <input type="text" onChange={(e) => setName(e.target.value)} />
             </div>
             <div>
-            <label>Description: </label>
-            <input type="text" onChange={(e) => setDescription(e.target.value)} />
+                <label>Description: </label>
+                <input type="text" onChange={(e) => setDescription(e.target.value)} />
             </div>
             <div>
-            <button type="submit">Add</button>
+                <button type="submit">Add</button>
             </div>
         </form>
     )

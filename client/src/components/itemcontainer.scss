@@ -1,15 +1,12 @@
-.itemlist-container{
-    padding:0rem 1rem 0 1rem;
-    .itemlist{
+.itemlist-container {
+    padding: 0rem 1rem 0 1rem;
+
+    .itemlist {
         list-style-type: none;
-       padding: 0;
+        padding: 0;
 
-       .item{
-
-        border-bottom: 1px dotted darkslateblue;
-
-       }
-
+        .item {
+            border-bottom: 1px dotted darkslateblue;
+        }
     }
-
 }

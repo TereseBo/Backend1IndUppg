@@ -4,9 +4,10 @@ import { useState, useEffect } from 'react'
 import "./friendslists.scss"
 //Components
 import Addbutton from "../components/Addbutton";
-import User from "../components/User";
 import FriendItemContainer from "../components/FriendItemContainer";
+import Linkbox from "../components/Linkbox";
 import Msgbox from '../components/Msgbox';
+import User from "../components/User";
 
 export default function FriendsLists({ items, setMsg, setStatus, status }) {
     const { id } = useParams()
@@ -29,9 +30,9 @@ export default function FriendsLists({ items, setMsg, setStatus, status }) {
                     setMsg(data)
                     setStatus(false)
                     break;
-
                 default:
                     setPgMsg(data)
+                    break;
             }
         }
         getLists()
@@ -56,14 +57,19 @@ export default function FriendsLists({ items, setMsg, setStatus, status }) {
                 break;
             default:
                 setPgMsg(data)
+                break;
         }
     }
+
     return (
         <div>
             {status ? (
-
                 <div>
-                    {pgMsg === '' ? null : <Msgbox msg={pgMsg}/>}
+                    {pgMsg === '' ? <Msgbox msg={pgMsg}/>:
+                    <div className="emptylist"> 
+                        <Msgbox msg={pgMsg}/>
+                        <Linkbox target="/friends" text="Go back to friends" />
+                    </div>}
                     <div className="friendslists-container">
                         <ul className="friendslists">
                             {list.map((listEntry) => (
@@ -79,7 +85,6 @@ export default function FriendsLists({ items, setMsg, setStatus, status }) {
                             ))}
                         </ul>
                     </div>
-
                 </div>
             ) : null}
         </div>

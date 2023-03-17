@@ -1,13 +1,12 @@
-.addbutton-box{
-    button{
+.linkbox{
+    a{
         border-radius: 5px;
         text-decoration: none;
         color: aliceblue;
-        font-family: 'Courier New', Courier, monospace;
         font-style: italic;
         font-weight: 700;
         padding: 0.5rem;
-        background-color: rgb(166, 36, 136);
+        background-color:  rgb(166, 36, 136);
         border: 1px ridge  darkslateblue;
     }
 }

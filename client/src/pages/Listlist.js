@@ -1,21 +1,18 @@
 import { useState, useEffect } from 'react'
-
 //Style
 import './listlist.scss'
-
-
 //Components
-import User from '../components/User'
 import Addbutton from '../components/Addbutton'
 import Itemcontainer from '../components/Itemcontainer'
 import NewItem from '../components/NewItem'
 import NewList from '../components/NewList'
 import Msgbox from '../components/Msgbox';
+import User from '../components/User'
 
 export default function Listlist({ setMsg, setStatus, status }) {
     const [list, setList] = useState([])
-    const [items, setItems] = useState([])
     const [pgMsg, setPgMsg] = useState('')
+
     useEffect(() => {
         async function getLists() {
             const res = await fetch('http://localhost:5050/content/lists', { credentials: 'include' })
@@ -23,8 +20,7 @@ export default function Listlist({ setMsg, setStatus, status }) {
             switch (res.status) {
                 case 200:
                     setList(JSON.parse(data))
-                    setMsg('')
-                    setPgMsg('  ')
+                    setPgMsg('Lists loaded')
                     break;
                 case 204:
                     setMsg('')
@@ -32,22 +28,22 @@ export default function Listlist({ setMsg, setStatus, status }) {
                     break;
                 case 401:
                     setMsg(data)
-                    setPgMsg('  ')
+                    setPgMsg('')
                     setStatus(false)
                     break;
                 default:
                     setMsg('')
                     setPgMsg(data)
             }
-            console.log(pgMsg)
         }
         getLists()
     }, [status])
 
     async function addItems(e) {
-        let res2 = await fetch(`http://localhost:5050/content/list/?id=${e.target.id}`, { credentials: 'include' })
+        let res2 = await fetch(`http://localhost:5050/content/list/?id=${e.target.id}`,
+            { credentials: 'include' })
         const data = await res2.text()
-        let listCopy = list//[...list]
+        let listCopy = list
         switch (res2.status) {
             case 200:
                 setMsg('')
@@ -99,7 +95,6 @@ export default function Listlist({ setMsg, setStatus, status }) {
     async function reLoadLists() {
         const res = await fetch('http://localhost:5050/content/lists', { credentials: 'include' })
         const data = await res.text()
-        console.log(res.status)
         switch (res.status) {
             case 200:
                 setList(JSON.parse(data))
@@ -112,7 +107,6 @@ export default function Listlist({ setMsg, setStatus, status }) {
                 setStatus(false)
                 setMsg(data)
                 setPgMsg('  ')
-                
                 break;
             default:
                 setMsg('')
@@ -123,31 +117,27 @@ export default function Listlist({ setMsg, setStatus, status }) {
     return (
         <div>
             {status ? (
+                <div>
+                    <Msgbox msg={pgMsg} />
+                    <div className='listlist-container'>
+                        <NewList setMsg={setMsg} setStatus={setStatus} status={status} setList={setList} list={list} setPgMsg={setPgMsg} />
+                        <ul className='listlist'>
 
-            <div>
-                {pgMsg !== '' ? <Msgbox msg={pgMsg}/> : null}
-                <div className='listlist-container'>
-                    <NewList setMsg={setMsg} setStatus={setStatus} status={status} setList={setList} list={list} setPgMsg={setPgMsg} />
-                    <ul className='listlist'>
-                        {list.map((listEntry) => (
-                            <li className='list-container' key={"list-" + listEntry.id}>
-                                <div className='list-header'>
-                                    <User key={"listname-" + listEntry.id} id={listEntry.id} name={listEntry.name} />
-                                    <Addbutton id={listEntry.id} key={'Dispbutton-' + listEntry.id} callback={addItems} text="Display items" />
-                                    <Addbutton id={listEntry.id} key={'Delbutton-' + listEntry.id} callback={deleteList} text="Delete list" />
-                                </div>
-                                <NewItem setPgMsg={setPgMsg} setMsg={setMsg} setStatus={setMsg} setList={setList} list={list} parentlist={listEntry.id} pgMsg={pgMsg} />
-
-
-                                {listEntry.items !== undefined ? <Itemcontainer setPgMsg={setPgMsg} items={listEntry.items} setMsg={setMsg} setStatus={setStatus} setList={setList} list={list} parentlist={listEntry.id}  /> :
-                                    null}
-
-                            </li>
-                        ))}
-                    </ul>
+                            {list.map((listEntry) => (
+                                <li className='list-container' key={"list-" + listEntry.id}>
+                                    <div className='list-header'>
+                                        <User key={"listname-" + listEntry.id} id={listEntry.id} name={listEntry.name} />
+                                        <Addbutton id={listEntry.id} key={'Dispbutton-' + listEntry.id} callback={addItems} text="Display items" />
+                                        <Addbutton id={listEntry.id} key={'Delbutton-' + listEntry.id} callback={deleteList} text="Delete list" />
+                                    </div>
+                                    <NewItem setPgMsg={setPgMsg} setMsg={setMsg} setStatus={setMsg} setList={setList} list={list} parentlist={listEntry.id} pgMsg={pgMsg} />
+                                    {listEntry.items !== undefined ? <Itemcontainer setPgMsg={setPgMsg} items={listEntry.items} setMsg={setMsg} setStatus={setStatus} setList={setList} list={list} parentlist={listEntry.id} /> 
+                                    : null}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
                 </div>
-
-            </div>
             ) : null}
         </div>
     )

@@ -1,22 +1,22 @@
-.Menu{
-display: flex;
-flex-direction: column;
-align-items: center;
-    nav{
+.Menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    nav {
         display: flex;
         gap: 2rem;
         align-items: center;
-      
 
-        a{
+        a {
             border-radius: 5px;
             text-decoration: none;
             color: aliceblue;
             font-style: italic;
             font-weight: 700;
             padding: 0.5rem;
-            background-color:  rgb(166, 36, 136);
-            border: 1px ridge  darkslateblue;
+            background-color: rgb(166, 36, 136);
+            border: 1px ridge darkslateblue;
         }
     }
 }

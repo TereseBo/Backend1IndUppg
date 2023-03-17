@@ -1,9 +1,7 @@
 import { useState } from "react";
 import { Link } from 'react-router-dom';
-
 //Style
 import "./login.scss";
-
 //Components
 import Msgbox from './Msgbox';
 
@@ -23,11 +21,17 @@ export default function Login({ status, setStatus, msg, setMsg }) {
             body: JSON.stringify(credentials),
             credentials: 'include'
         })
-        if (res.status === 200) {//Add other codes
-            setStatus(true)
-        }
         let data = await res.text()
-        setMsg(data)
+        switch (res.status) {
+            case 200:
+                setStatus(true)
+                setMsg(data)
+                break;
+            default:
+                setStatus(false)
+                setMsg(data)
+                break;
+        }
     }
 
     function saveChange(e) {
@@ -42,11 +46,9 @@ export default function Login({ status, setStatus, msg, setMsg }) {
                 <div className='login-box'>
                     <div className="loginform-container">
                         <h1>Login</h1>
-
                         <form className="login-form" onChange={saveChange} onSubmit={sendLogin}>
                             <div>
                                 <label htmlFor="name">Username</label>
-
                                 <input type="text" name="name" id="name" />
                             </div>
                             <div>
@@ -54,18 +56,14 @@ export default function Login({ status, setStatus, msg, setMsg }) {
                                 <input type="current-password" name="password" id="password" />
                             </div>
                             <input type="submit" value="Login" />
-
                         </form>
                         <Link to='/register'>Register</Link>
                     </div>
                     <Msgbox msg={msg} />
                 </div>
-
-
             ) : (
                 <Msgbox msg={msg} />
-            )
-            }
+            )}
         </div>
     )
 }

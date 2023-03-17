@@ -1,6 +1,5 @@
-import './Home.scss';
-import { useState } from "react";
-
+//Styles
+import './Header.scss';
 //Components
 import Login from './Login';
 import Menu from './Menu';
