@@ -14,7 +14,6 @@ function checkCookie(req, res, next) {
     try {
         const token = req.cookies.authToken;
         const decoded = jwt.verify(token, process.env.SECRET_KEY);
-        console.log(decoded)
         const { error, value } = itemSchema.validate(decoded)
         if (error) {
             res.status(400).send(error.details[0].message)
