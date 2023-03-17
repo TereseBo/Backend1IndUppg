@@ -14,17 +14,17 @@ export default function NewList({setMsg, setStatus, status, setList, list, setPg
         const data = await res.text()
         switch (res.status) {
             case 201:
-                setMsg(`List ${e.target.listname.value} created`)
-                setPgMsg('')
+                setPgMsg(`List ${e.target.listname.value} created`)
+                setMsg('')
                 refetchLists()
                 break;
             case 401:
                 setMsg(data)
-                setPgMsg('  ')
+                setPgMsg('')
                 setStatus(false)
                 break;
             default:
-                setMsg(data)
+                setPgMsg(data)
         }
     }
     async function refetchLists(){
@@ -35,8 +35,8 @@ export default function NewList({setMsg, setStatus, status, setList, list, setPg
         switch (res.status) {
             case 200:
                 setList(JSON.parse(data))
-                setMsg('Lists re-loaded')
-                setPgMsg('')
+                //setMsg('Lists re-loaded')
+                //setPgMsg('')
                 break;
             case 204:
                 setMsg('')
@@ -44,7 +44,7 @@ export default function NewList({setMsg, setStatus, status, setList, list, setPg
                 break;
             case 401:
                 setMsg(data)
-                setPgMsg('  ')
+                setPgMsg('')
                 setStatus(false)
                 break;
             default:

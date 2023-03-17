@@ -18,7 +18,7 @@ export default function Userlist({ setMsg, setStatus, status }) {
                 case 200:
                     setList(JSON.parse(data))
                     setMsg('')
-                    setPgMsg('')
+                    setPgMsg('  ')
                     break;
                 case 204:
                     setMsg('')

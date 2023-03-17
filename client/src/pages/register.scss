@@ -1,7 +1,10 @@
-.login{
-width: 100%;
-.loginform-container {
+.register{
+ //   margin-top: 2rem;
+
+
+.registerform-container {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     margin: auto;
@@ -10,7 +13,10 @@ width: 100%;
    // width: 50%;
     background-color: rgb(241, 178, 220);
     padding: 1rem;
-    gap: 2rem;
+    gap: 0.5rem;
+    h1{
+        margin: 0.5rem;
+    }
 
     form {
         display: flex;
@@ -39,7 +45,7 @@ width: 100%;
 
 
     }
-    a {
+    input[type=submit] {
         align-self: start;
         border-radius: 5px;
         text-decoration: none;

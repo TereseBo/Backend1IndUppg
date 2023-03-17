@@ -32,12 +32,10 @@ export default function NewItem({ setMsg, setStatus, status, setList, list, pare
                 setStatus(false)
                 break;
             default:
-                setMsg(data)
+                setPgMsg(data)
         }
     }
     async function refetchItems(e) {
-        console.log('refetch ran')
-
         let res2 = await fetch(`http://localhost:5050/content/list/?id=${e.target.id}`, { credentials: 'include' })
         const data = await res2.text()
         let listCopy = list//[...list]

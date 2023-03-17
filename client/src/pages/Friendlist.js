@@ -17,7 +17,7 @@ export default function Friendlist({ setMsg, setStatus, status }) {
             switch (res.status) {
                 case 200:
                     setList(JSON.parse(data))
-                    setPgMsg('')
+                    setPgMsg('  ')
                     break;
                 case 204:
                     setPgMsg("No friends yet, add some!")

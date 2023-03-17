@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Link } from 'react-router-dom';
 
+//Style
+import "./register.scss";
 //Components
 import Msgbox from '../components/Msgbox';
 export default function Register({ status, setStatus, msg, setMsg }) {
@@ -25,6 +27,7 @@ export default function Register({ status, setStatus, msg, setMsg }) {
         setMsg(data)
         if (res) {
             setPgMsg(data)
+            e.target.reset()
         }
     }
 
@@ -35,22 +38,29 @@ export default function Register({ status, setStatus, msg, setMsg }) {
     }
 
     return (
-        <div className='Register'>
+        <div className='register'>
             {status !== true ? (
-                <div>
-                    <form onChange={saveChange} onSubmit={sendRegistration}>
-                        <h1>Register</h1>
-                        <label htmlFor="name">Username</label>
-                        <input type="text" name="name" id="name" />
-                        <label htmlFor="password">Password</label>
-                        <input type="current-password" name="password" id="password" />
-                        <input type="submit" value="Login" />
+                <div className="register-box">
+                    <div className="registerform-container">
+                    <h1>Register</h1>
+                        <form className="register-form" onChange={saveChange} onSubmit={sendRegistration}>
+                            <div>
+                            <label htmlFor="name">Username</label>
+                            <input type="text" name="name" id="name" />
+                            </div>
+                            <div>
+                            <label htmlFor="password">Password</label>
+                            <input type="current-password" name="password" id="password" />
+                            </div>
 
-                    </form>
-                    <Msgbox msg={pgMsg}/>
+                            <input type="submit" value="Register" />
+
+                        </form>
+                    </div>
+                    <Msgbox msg={pgMsg} />
                 </div>
             ) : (
-                <p>You are already logged in</p>
+                <Msgbox msg="You are already logged in" />
             )
             }
         </div>

@@ -23,7 +23,7 @@ export default function FriendsLists({ items, setMsg, setStatus, status }) {
                     setPgMsg('')
                     break;
                 case 204:
-                    setPgMsg("No Lists found")
+                    setPgMsg("No Lists found for this friend")
                     break;
                 case 401:
                     setMsg(data)

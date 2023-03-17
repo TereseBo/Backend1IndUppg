@@ -24,7 +24,7 @@ export default function Listlist({ setMsg, setStatus, status }) {
                 case 200:
                     setList(JSON.parse(data))
                     setMsg('')
-                    setPgMsg('')
+                    setPgMsg('  ')
                     break;
                 case 204:
                     setMsg('')
@@ -109,9 +109,10 @@ export default function Listlist({ setMsg, setStatus, status }) {
                 setList([])
                 break;
             case 401:
+                setStatus(false)
                 setMsg(data)
                 setPgMsg('  ')
-                setStatus(false)
+                
                 break;
             default:
                 setMsg('')

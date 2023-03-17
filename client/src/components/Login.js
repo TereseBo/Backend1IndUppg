@@ -37,7 +37,7 @@ export default function Login({ status, setStatus, msg, setMsg }) {
     }
 
     return (
-        <div >
+        <div className="login" >
             {status !== true ? (
                 <div className='login-box'>
                     <div className="loginform-container">
@@ -63,7 +63,7 @@ export default function Login({ status, setStatus, msg, setMsg }) {
 
 
             ) : (
-                <p>{msg}</p>
+                <Msgbox msg={msg} />
             )
             }
         </div>
