@@ -1,6 +1,9 @@
+//Styles
+import './frienditem.scss';
+
 export default function FriendItem({item}) {
     return (
-        <div>
+        <div className="frienditem">
             <h3>{item.name}</h3>
             <p>{item.description}</p>
             <p><span>created: </span>{item.created}</p>

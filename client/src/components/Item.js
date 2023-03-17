@@ -150,7 +150,7 @@ export default function Item({ item, setMsg, setStatus, setList, list, parentlis
             <p><span>created: </span>{item.created}</p>
             {item.completed !== null ?
                 (<p><span>completed: </span>{item.completed} </p>)
-                : (<p>Not done</p>)}
+                : (<p>Not completed</p>)}
             <div className="button-container">
                 {item.completed === null ?
                     (<Addbutton id={item.id} text="Mark as done" callback={markAsDone} />)
