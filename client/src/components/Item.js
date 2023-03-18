@@ -103,13 +103,12 @@ export default function Item({ item, setMsg, setStatus, setList, list, parentlis
         const data = await res.text()
         switch (res.status) {
             case 200:
+                setMsg('   ')
                 refetchItems(parentlist)
                 setPgMsg('Item deleted')
-                setMsg('')
                 break;
             case 401:
                 setMsg(data)
-                setPgMsg('  ')
                 setStatus(false)
                 break;
             default:
@@ -121,9 +120,9 @@ export default function Item({ item, setMsg, setStatus, setList, list, parentlis
         let res2 = await fetch(`http://localhost:5050/content/list/?id=${listId}`, { credentials: 'include' })
         const data = await res2.text()
         let listCopy = list
-        setMsg('   ')
         switch (res2.status) {
             case 200:
+                setMsg('')
                 listCopy.find((list) => list.id == listId).items = JSON.parse(data)
                 setList(listCopy)
                 break;

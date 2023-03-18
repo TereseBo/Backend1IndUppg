@@ -29,6 +29,7 @@ export default function NewList({ setMsg, setStatus, setList, setPgMsg }) {
                 setPgMsg(data)
                 break;
         }
+        e.target.reset()
     }
 
     async function refetchLists() {

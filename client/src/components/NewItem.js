@@ -8,7 +8,7 @@ export default function NewItem({ setMsg, setStatus, setList, list, parentlist, 
 
     async function handleSubmit(e) {
         console.log('handleSubmit ran')
-        e.preventDefault()//Prevents reload of page
+        e.preventDefault()
         let res = await fetch(`http://localhost:5050/content/item`, {
             method: 'POST',
             headers: {
@@ -31,6 +31,7 @@ export default function NewItem({ setMsg, setStatus, setList, list, parentlist, 
             default:
                 setPgMsg(data)
         }
+        e.target.reset()
     }
     async function refetchItems(e) {
         let res2 = await fetch(`http://localhost:5050/content/list/?id=${e.target.id}`, { credentials: 'include' })
