@@ -12,6 +12,7 @@ const { postFriend } = require('../controllers/friendRoute/postFriend')
 const { friendLists } = require('../controllers/friendRoute/friendLists')
 const { friendListItems } = require('../controllers/friendRoute/friendListItems.js')
 
+//Route
 friendRoute.use(cookieparser())
 friendRoute.use(checkCookie)
 friendRoute.use(addUserFriends)

@@ -13,6 +13,7 @@ const {getUsers} = require('../controllers/contentRoute/getUsers')
 const itemRoute = require('./itemRoute')
 const listRoute = require('./listRoute')
 
+//Route
 contentRoute.use(cookieparser())
 contentRoute.use(checkCookie)
 

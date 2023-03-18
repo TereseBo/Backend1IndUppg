@@ -9,7 +9,6 @@ function getItem(req, res) {
 
     const { error, value } = itemSchema.validate(req.query)
     if (error) {
-        console.log(error)
         res.status(400).send(error.details[0].message)
         return
     }
@@ -34,6 +33,5 @@ function getItem(req, res) {
         }
     }) 
 }
-
 
 module.exports.getItem = getItem

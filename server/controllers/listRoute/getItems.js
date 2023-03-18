@@ -6,7 +6,7 @@ function getItems(req, res) {
             res.status(500).send(err)
         }
         if(results.length===0){
-            res.status(204).send('No items in list')
+            res.status(204).send()
             return
         }
         res.status(200).send(results)

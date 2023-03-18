@@ -6,6 +6,7 @@ const {logIn} = require('../controllers/loginRoute/login')
 // Middlewares
 const {checkCookie} = require('../middlewares/checkCookie')
 
+//Route
 loginRoute.post('/', logIn)
 
 loginRoute.use(cookieparser())

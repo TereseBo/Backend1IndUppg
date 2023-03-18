@@ -14,7 +14,6 @@ function logIn(req, res) {
         res.status(400).send(error.details[0].message)
         return
     }
-
     const { name, password } = value
 
     pool.execute('SELECT * FROM users WHERE name = ?', [name], (err, results) => {

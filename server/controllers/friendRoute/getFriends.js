@@ -2,7 +2,7 @@ const { pool } = require('../../database/pool')
 
 function getFriends(req, res) {
 
-    if (req.user.friends.length>0) {
+    if (req.user.friends.length > 0) {
         let query = 'SELECT name, id FROM users WHERE id IN ('
 
         for (let i = 0; i < req.user.friends.length; i++) {
@@ -19,10 +19,10 @@ function getFriends(req, res) {
             res.status(200).send(results)
             return
         })
-    }else{
-    res.status(204).send()
-    return 
+    } else {
+        res.status(204).send()
+        return
     }
-
 }
+
 module.exports.getFriends = getFriends

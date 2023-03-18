@@ -6,7 +6,6 @@ const itemSchema = joi.object({
     name: joi.string().min(3).max(50),
     iat: joi.number().integer().required().min(1),
     exp: joi.number().integer().required().min(1)
-
 })
 
 function checkCookie(req, res, next) {
@@ -24,7 +23,6 @@ function checkCookie(req, res, next) {
             id: id,
             name: name
         };
-
         next();
     } catch (err) {
         res.status(401).send('You are not authorized to view this page, please login');

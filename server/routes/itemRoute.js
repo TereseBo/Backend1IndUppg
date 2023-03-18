@@ -10,6 +10,7 @@ const {deleteItem} = require('../controllers/itemRoute/deleteItem')
 const {patchItem} = require('../controllers/itemRoute/patchItem')
 const {getItem}= require('../controllers/itemRoute/getItem')
 
+//Route
 itemRoute.use(addUserLists)
 
 itemRoute.post('/', postItem)

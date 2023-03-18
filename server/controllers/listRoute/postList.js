@@ -16,7 +16,6 @@ function postList(req, res) {
         if (err) {
             res.status(500).send(err)
         }
-
         res.status(201).send('List created')
     })
 }
