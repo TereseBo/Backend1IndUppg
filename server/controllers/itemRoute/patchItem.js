@@ -18,8 +18,8 @@ function patchItem(req, res) {
             res.status(500).send(err)
             return
         }
-        if (results.length === 0) {
-            res.status(400).send('No such item found')
+        if (!results.length > 0) {
+            res.status(204).send()
             return
         }
         const list = results[0].list_id

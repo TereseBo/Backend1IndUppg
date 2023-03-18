@@ -1,27 +1,27 @@
-const {pool}= require('../../database/pool')
+const { pool } = require('../../database/pool')
 const joi = require('joi')
 
 const friendSchema = joi.object({
     id: joi.number().integer().min(1).required()
 })
 
-function friendLists(req,res){
-    const {error, value} = friendSchema.validate(req.query)
-    if(error){
+function friendLists(req, res) {
+    const { error, value } = friendSchema.validate(req.query)
+    if (error) {
         res.status(400).send(error.details[0].message)
         return
     }
-    const {id} = value
-    if(!req.user.friends.includes(id)){
+    const { id } = value
+    if (!req.user.friends.includes(id)) {
         res.status(403).send('You are not authorized to view this list')
         return
     }
     pool.execute('SELECT * FROM lists WHERE user_id=?', [id], (err, results) => {
-        if(err){
+        if (err) {
             res.status(500).send(err)
             return
         }
-        if(results.length===0){
+        if (!results.length > 0) {
             res.status(204).send()
             return
         }
@@ -29,4 +29,4 @@ function friendLists(req,res){
     })
 }
 
-module.exports.friendLists=friendLists
+module.exports.friendLists = friendLists

@@ -5,33 +5,33 @@ const listIdSchema = joi.object({
     id: joi.number().required().min(1)
 })
 
-function friendListItems(req,res){
-    const {error, value} = listIdSchema.validate(req.query)
-    if(error){
+function friendListItems(req, res) {
+    const { error, value } = listIdSchema.validate(req.query)
+    if (error) {
         res.status(400).send(error.details[0].message)
         return
     }
-    const {id} = value
+    const { id } = value
     pool.execute('SELECT user_id FROM lists WHERE id=?', [id], (err, results) => {
-        if(err){
+        if (err) {
             res.status(500).send(err)
             return
         }
-        if(results.length===0){
-            res.status(400).send('No such list found')
+        if (!results.length > 0) {
+            res.status(204).send()
             return
         }
         const user = results[0].user_id
-        if(!req.user.friends.includes(user)){
+        if (!req.user.friends.includes(user)) {
             res.status(403).send('You are not authorized to view this list')
             return
         }
         pool.execute('SELECT * FROM items WHERE list_id=?', [id], (err, results) => {
-            if(err){
+            if (err) {
                 res.status(500).send(err)
                 return
             }
-            if(results.length===0){
+            if (!results.length > 0) {
                 res.status(204).send()
                 return
             }
@@ -40,4 +40,4 @@ function friendListItems(req,res){
     })
 }
 
-module.exports.friendListItems=friendListItems
+module.exports.friendListItems = friendListItems

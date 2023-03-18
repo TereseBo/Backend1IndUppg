@@ -21,7 +21,7 @@ export default function FriendsLists({ items, setMsg, setStatus, status }) {
             switch (res.status) {
                 case 200:
                     setList(JSON.parse(data))
-                    setPgMsg('')
+                    setPgMsg('Lists loaded for friend')
                     break;
                 case 204:
                     setPgMsg("No Lists found for this friend")

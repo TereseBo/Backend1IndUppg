@@ -5,7 +5,7 @@ function getItems(req, res) {
         if(err){
             res.status(500).send(err)
         }
-        if(results.length===0){
+        if(!results.length>0){
             res.status(204).send()
             return
         }

@@ -17,7 +17,7 @@ export default function Userlist({ setMsg, setStatus, status }) {
                 case 200:
                     setList(JSON.parse(data))
                     setMsg('')
-                    setPgMsg('  ')
+                    setPgMsg('Users loaded')
                     break;
                 case 204:
                     setMsg('')
@@ -61,7 +61,9 @@ export default function Userlist({ setMsg, setStatus, status }) {
 
     return (
         <div>
-            {pgMsg === '' ? null : <Msgbox msg={pgMsg} />}
+            {status ? (
+                <div>
+            <Msgbox msg={pgMsg} />
             <ul className='user-list'>
                 {list.map((friend) => (
                     <li className='user-container' key={"li-" + friend.id}>
@@ -70,6 +72,8 @@ export default function Userlist({ setMsg, setStatus, status }) {
                     </li>
                 ))}
             </ul>
+            </div>) : (
+                null)}
         </div>
     )
 }

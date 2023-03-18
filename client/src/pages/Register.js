@@ -11,7 +11,7 @@ export default function Register({ status, setMsg }) {
         password: ''
     })
     const [pgMsg, setPgMsg] = useState('')
-    setMsg('')
+    
 
     async function sendRegistration(e) {
         e.preventDefault();
@@ -37,7 +37,9 @@ export default function Register({ status, setMsg }) {
     }
 
     return (
+        
         <div className='register'>
+            {setMsg('')}
             {status !== true ? (
                 <div className="register-box">
                     <div className="registerform-container">

@@ -23,7 +23,7 @@ function postFriend(req, res) {
         }
         let users = results.map((user) => user.id)
         if (!users.includes(id)) {
-            res.status(400).send('No such user found')
+            res.status(204).send()
             return
         }
 

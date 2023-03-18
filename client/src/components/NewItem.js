@@ -7,7 +7,8 @@ export default function NewItem({ setMsg, setStatus, setList, list, parentlist, 
     const [description, setDescription] = useState('')
 
     async function handleSubmit(e) {
-        e.preventDefault()
+        console.log('handleSubmit ran')
+        e.preventDefault()//Prevents reload of page
         let res = await fetch(`http://localhost:5050/content/item`, {
             method: 'POST',
             headers: {
@@ -19,24 +20,22 @@ export default function NewItem({ setMsg, setStatus, setList, list, parentlist, 
         const data = await res.text()
         switch (res.status) {
             case 201:
-                setPgMsg('')
+                setPgMsg(data)
                 refetchItems(e)
                 setMsg(data)
-                break;
             case 401:
+                setStatus(false)
                 setMsg(data)
                 setPgMsg(data)
-                setStatus(false)
                 break;
             default:
                 setPgMsg(data)
-                break;
         }
     }
     async function refetchItems(e) {
         let res2 = await fetch(`http://localhost:5050/content/list/?id=${e.target.id}`, { credentials: 'include' })
         const data = await res2.text()
-        let listCopy = list
+        let listCopy = list//[...list]
         switch (res2.status) {
             case 200:
                 setMsg('')
@@ -56,6 +55,7 @@ export default function NewItem({ setMsg, setStatus, setList, list, parentlist, 
                 break
         }
     }
+
 
     return (
         <form className='newitem-form' id={parentlist} onSubmit={handleSubmit}>
